@@ -14,7 +14,7 @@ func Router() {
 		})
 	})
 	Routes(router)
-	router.Run(":8080") // listen and serve on 0.0.0.0:808
+	router.Run(":9090") // listen and serve on 0.0.0.0:808
 }
 
 func Routes(r *gin.Engine) {
