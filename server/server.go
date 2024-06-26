@@ -2,12 +2,18 @@ package server
 
 import (
 	"app.myriadflow.com/controllers"
+	"app.myriadflow.com/middleware"
 	"github.com/gin-gonic/gin"
 )
 
 func Router() {
 	router := gin.Default()
 	gin.SetMode(gin.DebugMode)
+
+	// adding middleware server
+	router.Use(middleware.CORSMiddleware())
+
+	// health check
 	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
