@@ -45,4 +45,4 @@ jobs:
           sudo docker stop myriadflow_gateway && sudo docker rm myriadflow_gateway && sudo docker image rm ghcr.io/myriadflow/app.myriadflow.com:main
           echo ${{ secrets.GHCR_TOKEN }} | sudo docker login ghcr.io -u secrets.GHCR_USERNAME --password-stdin
           sudo docker pull ghcr.io/myriadflow/app.myriadflow.com:main
-          sudo docker run --name="myriadflow_gateway" --env-file=.env -p 8080:9090 --net=bridge -d ghcr.io/myriadflow/app.myriadflow.com:main
+          sudo docker run --name="myriadflow_gateway" --env-file=.env -p 9090:9090 --net=bridge -d ghcr.io/myriadflow/app.myriadflow.com:main
