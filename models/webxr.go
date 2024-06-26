@@ -12,7 +12,7 @@ type WebXR struct {
 	Image360           string                 `json:"image360"`
 	Video360           string                 `json:"video360"`
 	RewardsMetadataURI string                 `json:"rewards_metadata_uri"`
-	Customizations     map[string]interface{} `gorm:"type:jsonb" json:"category"`
+	Customizations     map[string]interface{} `gorm:"type:jsonb" json:"customizations"`
 	FreeNFTImage       string                 `json:"free_nft_image"`
 	GoldReward         string                 `json:"gold_reward"`
 	SilverReward       string                 `json:"silver_reward"`
