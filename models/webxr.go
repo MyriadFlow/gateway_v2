@@ -8,18 +8,18 @@ import (
 )
 
 type WebXR struct {
-	ID                 uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
-	Image360           string    `json:"image360"`
-	Video360           string    `json:"video360"`
-	RewardsMetadataURI string    `json:"rewards_metadata_uri"`
-	Customizations     string    `json:"customizations"`
-	FreeNFTImage       string    `json:"free_nft_image"`
-	GoldReward         string    `json:"gold_reward"`
-	SilverReward       string    `json:"silver_reward"`
-	BronzeReward       string    `json:"bronze_reward"`
-	PhygitalID         string    `json:"phygital_id"`
-	CreatedAt          time.Time `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
-	UpdatedAt          time.Time `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
+	ID                 uuid.UUID              `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
+	Image360           string                 `json:"image360"`
+	Video360           string                 `json:"video360"`
+	RewardsMetadataURI string                 `json:"rewards_metadata_uri"`
+	Customizations     map[string]interface{} `gorm:"type:jsonb" json:"category"`
+	FreeNFTImage       string                 `json:"free_nft_image"`
+	GoldReward         string                 `json:"gold_reward"`
+	SilverReward       string                 `json:"silver_reward"`
+	BronzeReward       string                 `json:"bronze_reward"`
+	PhygitalID         string                 `json:"phygital_id"`
+	CreatedAt          time.Time              `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
+	UpdatedAt          time.Time              `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }
 
 func (w *WebXR) BeforeCreate(tx *gorm.DB) (err error) {

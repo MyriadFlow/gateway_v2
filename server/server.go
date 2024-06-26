@@ -1,6 +1,8 @@
 package server
 
 import (
+	"os"
+
 	"app.myriadflow.com/controllers"
 	"app.myriadflow.com/middleware"
 	"github.com/gin-gonic/gin"
@@ -8,7 +10,11 @@ import (
 
 func Router() {
 	router := gin.Default()
-	gin.SetMode(gin.DebugMode)
+	if len(os.Getenv("GIN_MODE")) == 0 {
+		gin.SetMode(gin.ReleaseMode)
+	} else {
+		gin.SetMode(gin.DebugMode)
+	}
 
 	// adding middleware server
 	router.Use(middleware.CORSMiddleware())

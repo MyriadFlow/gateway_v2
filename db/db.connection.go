@@ -31,7 +31,7 @@ func Init() {
 
 	InitMigration(DB)
 
-	err = DB.AutoMigrate(&models.User{}, &models.Brand{}, &models.Collection{}, &models.Phygital{}, &models.WebXR{}, &models.Avatar{}, &models.Variant{})
+	err = DB.Debug().AutoMigrate(&models.User{}, &models.Brand{}, &models.Collection{}, &models.Phygital{}, &models.WebXR{}, &models.Avatar{}, &models.Variant{})
 	if err != nil {
 		log.Fatalf("failed to migrate database: %v", err)
 	}
