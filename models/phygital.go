@@ -10,6 +10,7 @@ import (
 type Phygital struct {
 	ID              uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
 	Name            string    `json:"name"`
+	BrandName       string    `json:"brand_name"`
 	Category        string    `json:"category"`
 	Description     string    `json:"description"`
 	Price           int       `json:"price"`
@@ -29,8 +30,8 @@ type Phygital struct {
 	DeployerAddress string    `json:"deployer_address"`
 	ContractAddress string    `json:"contract_address"`
 	GraphURL        string    `json:"graph_url"`
-	CollectionID    int       `json:"collection_id"`
-	CreatedAt      time.Time `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
+	CollectionID    uuid.UUID `json:"collection_id"`
+	CreatedAt       time.Time `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt       time.Time `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }
 

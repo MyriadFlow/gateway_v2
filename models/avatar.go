@@ -9,7 +9,7 @@ import (
 
 type Avatar struct {
 	ID         uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
-	AvatarID   int       `json:"avatar_id"`
+	AvatarID   string    `json:"avatar_id"`
 	URL        string    `json:"url"`
 	UserID     string    `json:"user_id"`
 	PhygitalID string    `json:"phygital_id"`

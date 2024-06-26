@@ -20,13 +20,13 @@ type Brand struct {
 	AdditionalInfo  string    `json:"additional_info"`
 	Industry        string    `json:"industry"`
 	Tags            string    `json:"tags"`
-	Fees            int       `json:"fees"`
+	Fees            float64   `json:"fees"`
 	PayoutAddress   string    `json:"payout_address"`
 	AccessMaster    string    `json:"access_master"`
 	TradeHub        string    `json:"trade_hub"`
 	Blockchain      string    `json:"blockchain"`
 	ChainID         string    `json:"chain_id"`
-	ManagerID       int       `json:"manager_id"`
+	ManagerID       string    `json:"manager_id"` //user walletaddress
 	CreatedAt       time.Time `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt       time.Time `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }
