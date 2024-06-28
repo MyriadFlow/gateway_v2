@@ -19,6 +19,7 @@ type Phygital struct {
 	Royality        int            `json:"royality"`
 	Image           string         `json:"image"`
 	ProductInfo     string         `json:"product_info"`
+	ProductUrl     string         `json:"product_url"`
 	Color           string         `json:"color"`
 	Size            string         `json:"size"`
 	Weight          int            `json:"weight"`
