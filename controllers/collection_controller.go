@@ -33,6 +33,16 @@ func GetCollection(c *gin.Context) {
 	c.JSON(http.StatusOK, collection)
 }
 
+func GetCollectionByBrandId(c *gin.Context) {
+	brand_id := c.Param("brandId")
+	var collection models.Collection
+	if err := db.DB.First(&collection, "brand_id = ?", brand_id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Collection not found"})
+		return
+	}
+	c.JSON(http.StatusOK, collection)
+}
+
 // get all connection api
 func GetAllCollections(c *gin.Context) {
 	var collections []models.Collection
@@ -58,6 +68,29 @@ func UpdateCollection(c *gin.Context) {
 	}
 
 	if err := db.DB.Save(&collection).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, collection)
+}
+
+func UpdateCollectionByBrandId(c *gin.Context) {
+	id := c.Param("brandId")
+	var collection models.Collection
+	if err := db.DB.First(&collection, "brand_id = ?", id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Collection not found"})
+		return
+	}
+
+	var input models.Collection
+
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := db.DB.Model(&collection).Updates(&input).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

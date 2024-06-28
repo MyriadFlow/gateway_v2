@@ -47,8 +47,10 @@ func Routes(r *gin.Engine) {
 	// Collection routes
 	r.POST("/collections", controllers.CreateCollection)
 	r.GET("/collections/:id", controllers.GetCollection)
+	r.GET("/collections/brand-id/:brandId", controllers.GetCollectionByBrandId)
 	r.GET("/collections/all", controllers.GetAllCollections)
 	r.PUT("/collections/:id", controllers.UpdateCollection)
+	r.PUT("/collections/brand-id/:brandId", controllers.UpdateCollectionByBrandId)
 	r.DELETE("/collections/:id", controllers.DeleteCollection)
 
 	// Phygital routes
