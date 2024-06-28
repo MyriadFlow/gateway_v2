@@ -22,7 +22,7 @@ type Phygital struct {
 	ProductUrl     string         `json:"product_url"`
 	Color           string         `json:"color"`
 	Size            string         `json:"size"`
-	Weight          int            `json:"weight"`
+	Weight          float64            `json:"weight"`
 	Material        string         `json:"material"`
 	Usage           string         `json:"usage"`
 	Quality         string         `json:"quality"`
