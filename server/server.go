@@ -43,6 +43,8 @@ func Routes(r *gin.Engine) {
 	r.GET("/brands/all", controllers.GetAllBrands)
 	r.PUT("/brands/:id", controllers.UpdateBrand)
 	r.DELETE("/brands/:id", controllers.DeleteBrand)
+	r.GET("/brands/manager/:manager_id", controllers.GetBrandsByManager)
+
 
 	// Collection routes
 	r.POST("/collections", controllers.CreateCollection)

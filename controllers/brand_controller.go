@@ -43,6 +43,19 @@ func GetAllBrands(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, brands)
 }
+func GetBrandsByManager(c *gin.Context) {
+	managerID := c.Param("manager_id")
+	var brands []models.Brand
+	if err := db.DB.Where("manager_id = ?", managerID).Find(&brands).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	if len(brands) == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "No brands found for the specified manager_id"})
+		return
+	}
+	c.JSON(http.StatusOK, brands)
+}
 
 func UpdateBrand(c *gin.Context) {
 	id := c.Param("id")
