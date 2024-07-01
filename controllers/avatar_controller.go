@@ -36,6 +36,18 @@ func GetAvatar(c *gin.Context) {
 	c.JSON(http.StatusOK, avatar)
 }
 
+func GetAvatarByPhygitalID(c *gin.Context) {
+	phygitalID := c.Param("phygital_id")
+	var avatar models.Avatar
+	if err := db.DB.First(&avatar, "phygital_id = ?", phygitalID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Avatar not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, avatar)
+}
+
+
 // get all avatars api
 func GetAllAvatars(c *gin.Context) {
 	var avatars []models.Avatar

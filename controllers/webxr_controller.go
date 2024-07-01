@@ -34,6 +34,17 @@ func GetWebXR(c *gin.Context) {
 	c.JSON(http.StatusOK, webxr)
 }
 
+func GetWebXRByPhygitalID(c *gin.Context) {
+	phygitalID := c.Param("phygital_id")
+	var webxr models.WebXR
+	if err := db.DB.First(&webxr, "phygital_id = ?", phygitalID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "WebXR not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, webxr)
+}
+
 // get all webxr
 func GetAllWebXR(c *gin.Context) {
 	var webxr []models.WebXR

@@ -68,6 +68,7 @@ func Routes(r *gin.Engine) {
 	r.GET("/webxr/all", controllers.GetAllWebXR)
 	r.PUT("/webxr/:id", controllers.UpdateWebXR)
 	r.DELETE("/webxr/:id", controllers.DeleteWebXR)
+	r.GET("/webxr/phygital/:phygital_id", controllers.GetWebXRByPhygitalID)
 
 	// Avatar routes
 	r.POST("/avatars", controllers.CreateAvatar)
@@ -75,6 +76,7 @@ func Routes(r *gin.Engine) {
 	r.GET("/avatars/all", controllers.GetAllAvatars)
 	r.PUT("/avatars/:id", controllers.UpdateAvatar)
 	r.DELETE("/avatars/:id", controllers.DeleteAvatar)
+	r.GET("/avatars/phygital/:phygital_id", controllers.GetAvatarByPhygitalID)
 
 	// Variant routes
 	r.POST("/variants", controllers.CreateVariant)
