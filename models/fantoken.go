@@ -10,7 +10,7 @@ type FanToken struct {
 	BrandID     	string          `json:"brand_id"`
 	CollectionID    uuid.UUID  		`json:"collection_id"`
 	PhygitalID      string          `json:"phygital_id"`
-	TokenFestID		string     		`json:"tokenFest_id"`
+	FanTokenID		string     		`json:"fantoken_id"`
 	CreatedAt   	time.Time       `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt   	time.Time       `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }
