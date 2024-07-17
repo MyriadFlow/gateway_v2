@@ -84,4 +84,11 @@ func Routes(r *gin.Engine) {
 	r.GET("/variants/all", controllers.GetAllVariant)
 	r.PUT("/variants/:id", controllers.UpdateVariant)
 	r.DELETE("/variants/:id", controllers.DeleteVariant)
+
+	//TokenFest routes
+	r.POST("/fantoken", controllers.CreateFanToken)
+	r.GET("/fantoken/:id" , controllers.GetFanToken)
+	r.GET("fantoken/all" , controllers.GetAllFanToken)
+	r.PUT("fantoken/:id" , controllers.UpdateFanToken)
+	r.DELETE("fantoken/:id" , controllers.DeleteFanToken)
 }
