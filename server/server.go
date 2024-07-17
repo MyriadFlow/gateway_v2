@@ -91,4 +91,11 @@ func Routes(r *gin.Engine) {
 	r.GET("fantoken/all" , controllers.GetAllFanToken)
 	r.PUT("fantoken/:id" , controllers.UpdateFanToken)
 	r.DELETE("fantoken/:id" , controllers.DeleteFanToken)
+
+	//ChainType routes
+	r.POST("/chains", controllers.CreateChain)
+    r.GET("/chains/:id", controllers.GetChain)
+    r.PUT("/chains/:id", controllers.UpdateChain)
+    r.DELETE("/chains/:id", controllers.DeleteChain)
+    r.GET("/chains", controllers.GetChains)
 }

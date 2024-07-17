@@ -46,7 +46,8 @@ func GetCollectionByBrandId(c *gin.Context) {
 // get all connection api
 func GetAllCollections(c *gin.Context) {
 	var collections []models.Collection
-	if err := db.DB.Find(&collections).Error; err != nil {
+	chainTypeId := c.Param("chaintype_id")
+	if err := db.DB.Find(&collections).Where("chaintype_id = ?", chainTypeId).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

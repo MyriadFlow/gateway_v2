@@ -33,6 +33,7 @@ type Phygital struct {
 	ContractAddress string         `json:"contract_address"`
 	GraphURL        string         `json:"graph_url"`
 	CollectionID    uuid.UUID      `json:"collection_id"`
+	ChainTypeID  		uuid.UUID	   `gorm:"type:uuid" json:"chaintype_id"`
 	CreatedAt       time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt       time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }

@@ -48,6 +48,16 @@ func GetAllUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 }
 
+func GetAllUsersByChainType(c *gin.Context) {
+	var users []models.User
+	chainTypeId := c.Param("chaintype_id")
+	if err := db.DB.Find(&users).Where("chaintype_id = ? " , chainTypeId).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, users)
+}
+
 
 // UpdateUser updates a user by ID
 func UpdateUser(c *gin.Context) {
