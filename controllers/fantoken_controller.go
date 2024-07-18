@@ -34,10 +34,19 @@ func GetFanToken(c *gin.Context) {
 	c.JSON(http.StatusOK, fantoken)
 }
 
-func GetAllFanToken(c *gin.Context) {
+func GetAllFanTokenByChainType(c *gin.Context) {
 	chaintypeId := c.Param("chaintype_id")
 	var fantoken []models.FanToken
 	if err := db.DB.Where("chaintype_id = ?",chaintypeId).Find(&fantoken).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, fantoken)
+}
+
+func GetAllFanToken(c *gin.Context) {
+	var fantoken []models.FanToken
+	if err := db.DB.Find(&fantoken).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

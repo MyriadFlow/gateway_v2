@@ -49,10 +49,19 @@ func GetAvatarByPhygitalID(c *gin.Context) {
 
 
 // get all avatars api
-func GetAllAvatars(c *gin.Context) {
+func GetAllAvatarsByChainType(c *gin.Context) {
 	chaintypeId := c.Param("chaintype_id")
 	var avatars []models.Avatar
 	if err := db.DB.Where("chaintype_id = ?" , chaintypeId).Find(&avatars).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, avatars)
+}
+
+func GetAllAvatars(c *gin.Context) {
+	var avatars []models.Avatar
+	if err := db.DB.Find(&avatars).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

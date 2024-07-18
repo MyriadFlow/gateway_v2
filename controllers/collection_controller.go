@@ -44,10 +44,20 @@ func GetCollectionByBrandId(c *gin.Context) {
 }
 
 // get all connection api
-func GetAllCollections(c *gin.Context) {
+func GetAllCollectionsByChainType(c *gin.Context) {
 	chaintypeId := c.Param("chaintype_id")
 	var collections []models.Collection
 	if err := db.DB.Where("chaintype_id = ?", chaintypeId).Find(&collections).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, collections)
+}
+
+func GetAllCollections(c *gin.Context) {
+	var collections []models.Collection
+	if err := db.DB.Find(&collections).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

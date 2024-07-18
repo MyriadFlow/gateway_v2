@@ -38,10 +38,19 @@ func GetPhygital(c *gin.Context) {
 }
 
 // get all phygital api
-func GetAllPhygital(c *gin.Context) {
+func GetAllPhygitalByChainType(c *gin.Context) {
 	chaintypeId := c.Param("chaintype_id")
 	var phygitals []models.Phygital
 	if err := db.DB.Where("chaintype_id = ? " , chaintypeId).Find(&phygitals).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, phygitals)
+}
+
+func GetAllPhygital(c *gin.Context) {
+	var phygitals []models.Phygital
+	if err := db.DB.Find(&phygitals).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

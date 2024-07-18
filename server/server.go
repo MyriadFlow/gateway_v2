@@ -41,7 +41,8 @@ func Routes(r *gin.Engine) {
 	// Brand routes
 	r.POST("/brands", controllers.CreateBrand)
 	r.GET("/brands/:id", controllers.GetBrand)
-	r.GET("/brands/all/:chaintype_id", controllers.GetAllBrands)
+	r.GET("/brands/all/:chaintype_id", controllers.GetAllBrandsByChainType)
+	r.GET("/brands/all", controllers.GetAllBrands)
 	r.PUT("/brands/:id", controllers.UpdateBrand)
 	r.DELETE("/brands/:id", controllers.DeleteBrand)
 	r.GET("/brands/manager/:manager_id", controllers.GetBrandsByManager)
@@ -51,7 +52,8 @@ func Routes(r *gin.Engine) {
 	r.POST("/collections", controllers.CreateCollection)
 	r.GET("/collections/:id", controllers.GetCollection)
 	r.GET("/collections/brand-id/:brandId", controllers.GetCollectionByBrandId)
-	r.GET("/collections/all/:chaintype_id", controllers.GetAllCollections)
+	r.GET("/collections/all/:chaintype_id", controllers.GetAllCollectionsByChainType)
+	r.GET("/collections/all", controllers.GetAllCollections)
 	r.PUT("/collections/:id", controllers.UpdateCollection)
 	r.PUT("/collections/brand-id/:brandId", controllers.UpdateCollectionByBrandId)
 	r.DELETE("/collections/:id", controllers.DeleteCollection)
@@ -59,14 +61,16 @@ func Routes(r *gin.Engine) {
 	// Phygital routes
 	r.POST("/phygitals", controllers.CreatePhygital)
 	r.GET("/phygitals/:id", controllers.GetPhygital)
-	r.GET("/phygitals/all/:chaintype_id", controllers.GetAllPhygital)
+	r.GET("/phygitals/all/:chaintype_id", controllers.GetAllPhygitalByChainType)
+	r.GET("/phygitals/all", controllers.GetAllPhygital)
 	r.PUT("/phygitals/:id", controllers.UpdatePhygital)
 	r.DELETE("/phygitals/:id", controllers.DeletePhygital)
 
 	// WebXR routes
 	r.POST("/webxr", controllers.CreateWebXR)
 	r.GET("/webxr/:id", controllers.GetWebXR)
-	r.GET("/webxr/all/:chaintype_id", controllers.GetAllWebXR)
+	r.GET("/webxr/all/:chaintype_id", controllers.GetAllWebXRByChainType)
+	r.GET("/webxr/all", controllers.GetAllWebXR)
 	r.PUT("/webxr/:id", controllers.UpdateWebXR)
 	r.DELETE("/webxr/:id", controllers.DeleteWebXR)
 	r.GET("/webxr/phygital/:phygital_id", controllers.GetWebXRByPhygitalID)
@@ -74,7 +78,8 @@ func Routes(r *gin.Engine) {
 	// Avatar routes
 	r.POST("/avatars", controllers.CreateAvatar)
 	r.GET("/avatars/:id", controllers.GetAvatar)
-	r.GET("/avatars/all/:chaintype_id", controllers.GetAllAvatars)
+	r.GET("/avatars/all/:chaintype_id", controllers.GetAllAvatarsByChainType)
+	r.GET("/avatars/all", controllers.GetAllAvatars)
 	r.PUT("/avatars/:id", controllers.UpdateAvatar)
 	r.DELETE("/avatars/:id", controllers.DeleteAvatar)
 	r.GET("/avatars/phygital/:phygital_id", controllers.GetAvatarByPhygitalID)
@@ -82,14 +87,16 @@ func Routes(r *gin.Engine) {
 	// Variant routes
 	r.POST("/variants", controllers.CreateVariant)
 	r.GET("/variants/:id", controllers.GetVariant)
-	r.GET("/variants/all/:chaintype_id", controllers.GetAllVariant)
+	r.GET("/variants/all/:chaintype_id", controllers.GetAllVariantByChainType)
+	r.GET("/variants/all", controllers.GetAllVariant)
 	r.PUT("/variants/:id", controllers.UpdateVariant)
 	r.DELETE("/variants/:id", controllers.DeleteVariant)
 
 	//FanToken routes
 	r.POST("/fantoken", controllers.CreateFanToken)
 	r.GET("/fantoken/:id" , controllers.GetFanToken)
-	r.GET("fantoken/all/:chaintype_id" , controllers.GetAllFanToken)
+	r.GET("fantoken/all/:chaintype_id" , controllers.GetAllFanTokenByChainType)
+	r.GET("fantoken/all" , controllers.GetAllFanToken)
 	r.PUT("fantoken/:id" , controllers.UpdateFanToken)
 	r.DELETE("fantoken/:id" , controllers.DeleteFanToken)
 
