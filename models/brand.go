@@ -26,7 +26,7 @@ type Brand struct {
 	TradeHub        string    `json:"trade_hub"`
 	Blockchain      string    `json:"blockchain"`
 	ChainID         string    `json:"chain_id"`
-	ChainTypeID  		uuid.UUID	   `gorm:"type:uuid" json:"chaintype_id"`
+	ChaintypeID  		uuid.UUID	   `gorm:"type:uuid" json:"chaintype_id"`
 	ManagerID       string    `json:"manager_id"` //user walletaddress
 	CreatedAt       time.Time `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt       time.Time `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`

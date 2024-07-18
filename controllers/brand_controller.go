@@ -36,9 +36,9 @@ func GetBrand(c *gin.Context) {
 
 // get all brands api
 func GetAllBrands(c *gin.Context) {
+	chaintypeId := c.Param("chaintype_id")
 	var brands []models.Brand
-	chainTypeId := c.Param("chaintype_id")
-	if err := db.DB.Find(&brands).Where("chaintype_id = ? ", chainTypeId).Error; err != nil {
+	if err := db.DB.Where("chaintype_id = ?", chaintypeId).Find(&brands).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
