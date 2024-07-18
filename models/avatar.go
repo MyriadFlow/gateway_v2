@@ -13,7 +13,7 @@ type Avatar struct {
 	URL        string    `json:"url"`
 	UserID     string    `json:"user_id"`
 	PhygitalID string    `json:"phygital_id"`
-	ChainTypeID  		uuid.UUID	   `gorm:"type:uuid" json:"chaintype_id"`
+	ChaintypeID  		uuid.UUID	   `gorm:"type:uuid" json:"chaintype_id"`
 	CreatedAt  time.Time `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt  time.Time `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }

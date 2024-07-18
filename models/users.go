@@ -13,7 +13,7 @@ type User struct {
 	WalletAddress string    `json:"wallet_address"`
 	Name          string    `json:"name"`
 	ProfileImage  string    `json:"profile_image"`
-	ChainTypeID  		uuid.UUID	   `gorm:"type:uuid" json:"chaintype_id"`
+	ChaintypeID  		uuid.UUID	   `gorm:"type:uuid" json:"chaintype_id"`
 	CreatedAt     time.Time `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt     time.Time `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }

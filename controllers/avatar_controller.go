@@ -50,9 +50,9 @@ func GetAvatarByPhygitalID(c *gin.Context) {
 
 // get all avatars api
 func GetAllAvatars(c *gin.Context) {
+	chaintypeId := c.Param("chaintype_id")
 	var avatars []models.Avatar
-	chainTypeId := c.Param("chaintype_id")
-	if err := db.DB.Find(&avatars).Where("chaintype_id = ?" , chainTypeId).Error; err != nil {
+	if err := db.DB.Find(&avatars).Where("chaintype_id = ?" , chaintypeId).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

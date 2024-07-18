@@ -39,8 +39,8 @@ func GetVariant(c *gin.Context) {
 // get all variant api
 func GetAllVariant(c *gin.Context) {
 	var variants []models.Variant
-	chainTypeId := c.Param("chaintype_id")
-	if err := db.DB.Find(&variants).Where("chaintype_id = ? ", chainTypeId).Error; err != nil {
+	chaintypeId := c.Param("chaintype_id")
+	if err := db.DB.Find(&variants).Where("chaintype_id = ? ", chaintypeId).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
