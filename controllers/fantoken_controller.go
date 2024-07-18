@@ -35,9 +35,9 @@ func GetFanToken(c *gin.Context) {
 }
 
 func GetAllFanToken(c *gin.Context) {
-	var fantoken []models.FanToken
 	chaintypeId := c.Param("chaintype_id")
-	if err := db.DB.Find(&fantoken).Where("chaintype_id = ?",chaintypeId ).Error; err != nil {
+	var fantoken []models.FanToken
+	if err := db.DB.Where("chaintype_id = ?",chaintypeId).Find(&fantoken).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

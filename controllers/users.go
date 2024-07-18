@@ -49,9 +49,9 @@ func GetAllUsers(c *gin.Context) {
 }
 
 func GetAllUsersByChainType(c *gin.Context) {
-	var users []models.User
 	chaintypeId := c.Param("chaintype_id")
-	if err := db.DB.Find(&users).Where("chaintype_id = ? " , chaintypeId).Error; err != nil {
+	var users []models.User
+	if err := db.DB.Where("chaintype_id = ? " , chaintypeId).Find(&users).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

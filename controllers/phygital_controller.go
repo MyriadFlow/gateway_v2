@@ -39,9 +39,9 @@ func GetPhygital(c *gin.Context) {
 
 // get all phygital api
 func GetAllPhygital(c *gin.Context) {
-	var phygitals []models.Phygital
 	chaintypeId := c.Param("chaintype_id")
-	if err := db.DB.Find(&phygitals).Where("chaintype_id = ? " , chaintypeId).Error; err != nil {
+	var phygitals []models.Phygital
+	if err := db.DB.Where("chaintype_id = ? " , chaintypeId).Find(&phygitals).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

@@ -47,9 +47,9 @@ func GetWebXRByPhygitalID(c *gin.Context) {
 
 // get all webxr
 func GetAllWebXR(c *gin.Context) {
-	var webxr []models.WebXR
 	chaintypeId := c.Param("chaintype_id")
-	if err := db.DB.Find(&webxr).Where("chaintype_id = ? ",chaintypeId).Error; err != nil {
+	var webxr []models.WebXR
+	if err := db.DB.Where("chaintype_id = ? ",chaintypeId).Find(&webxr).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
