@@ -106,4 +106,14 @@ func Routes(r *gin.Engine) {
     r.PUT("/chains/:id", controllers.UpdateChain)
     r.DELETE("/chains/:id", controllers.DeleteChain)
     r.GET("/chains", controllers.GetChains)
+
+	// Copies routes
+	r.POST("/copies", controllers.CreateCopies)
+	r.GET("/copies/:id", controllers.GetCopiesById)
+	r.GET("/copies/phygital/:phygital_id", controllers.GetCopiesByPhygitalID)
+	r.GET("/copies/owner/:phygital_id/:copy_number", controllers.GetOwnerByPhygitalAndCopyNumber)
+	r.PUT("/copies/:id", controllers.UpdateCopies)
+	r.DELETE("/copies/:id", controllers.DeleteCopies)
 }
+
+
