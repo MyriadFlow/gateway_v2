@@ -111,6 +111,7 @@ func Routes(r *gin.Engine) {
 	r.POST("/nftentries", controllers.CreateNftEntries)
 	r.GET("/nftentries/:id", controllers.GetNftEntriesById)
 	r.GET("/nftentries/phygital/:phygital_id", controllers.GetNftEntriesByPhygitalID)
+	r.GET("/nftentries/all/:chaintype_id", controllers.GetAllNftEntriesByChainType)
 	r.GET("/nftentries/owner/:phygital_id/:copy_number", controllers.GetOwnerByPhygitalAndCopyNumber)
 	r.PUT("/nftentries/:id", controllers.UpdateNftEntries)
 	r.DELETE("/nftentries/:id", controllers.DeleteNftEntries)
