@@ -10,94 +10,94 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CreateCopies(c *gin.Context) {
-	var copies models.Copies
-	if err := c.ShouldBindJSON(&copies); err != nil {
+func CreateNftEntries(c *gin.Context) {
+	var nftentries models.NftEntries
+	if err := c.ShouldBindJSON(&nftentries); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err := db.DB.Create(&copies).Error; err != nil {
+	if err := db.DB.Create(&nftentries).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, copies)
+	c.JSON(http.StatusOK, nftentries)
 }
 
-func GetCopiesById(c *gin.Context) {
+func GetNftEntriesById(c *gin.Context) {
 	id := c.Param("id")
-	var copies models.Copies
-	if err := db.DB.First(&copies, "id = ?", id).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Copies not found"})
+	var nftentries models.NftEntries
+	if err := db.DB.First(&nftentries, "id = ?", id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "nftentries not found"})
 		return
 	}
 
-	c.JSON(http.StatusOK, copies)
+	c.JSON(http.StatusOK, nftentries)
 }
 
-func GetCopiesByPhygitalID(c *gin.Context) {
+func GetNftEntriesByPhygitalID(c *gin.Context) {
 	phygitalID := c.Param("phygital_id")
-	var copies models.Copies
-	if err := db.DB.First(&copies, "phygital_id = ?", phygitalID).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Copies not found"})
+	var nftentries models.NftEntries
+	if err := db.DB.First(&nftentries, "phygital_id = ?", phygitalID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "nftentries not found"})
 		return
 	}
 
-	c.JSON(http.StatusOK, copies)
+	c.JSON(http.StatusOK, nftentries)
 }
 
-func GetAllCopiesByChainType(c *gin.Context) {
+func GetAllNftEntriesByChainType(c *gin.Context) {
 	chaintypeId := c.Param("chaintype_id")
-	var copies []models.Copies
-	if err := db.DB.Where("chaintype_id = ?" , chaintypeId).Find(&copies).Error; err != nil {
+	var nftentries []models.NftEntries
+	if err := db.DB.Where("chaintype_id = ?" , chaintypeId).Find(&nftentries).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, copies)
+	c.JSON(http.StatusOK, nftentries)
 }
 
 func GetOwnerByPhygitalAndCopyNumber(c *gin.Context) {
 	phygitalID := c.Param("phygital_id")
 	copyNumber := c.Param("copy_number")
 
-	var copies models.Copies
-	if err := db.DB.First(&copies, "phygital_id = ? AND copy_number = ?", phygitalID, copyNumber).Error; err != nil {
+	var nftentries models.NftEntries
+	if err := db.DB.First(&nftentries, "phygital_id = ? AND copy_number = ?", phygitalID, copyNumber).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Owner not found"})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"wallet_address": copies.WalletAddress})
+	c.JSON(http.StatusOK, gin.H{"wallet_address": nftentries.WalletAddress})
 }
 
 
-func UpdateCopies(c *gin.Context) {
+func UpdateNftEntries(c *gin.Context) {
 	id := c.Param("id")
-	var copies models.Copies
-	if err := db.DB.First(&copies, "id = ?", id).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Copies not found"})
+	var nftentries models.NftEntries
+	if err := db.DB.First(&nftentries, "id = ?", id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "nftentries not found"})
 		return
 	}
 
-	if err := c.ShouldBindJSON(&copies); err != nil {
+	if err := c.ShouldBindJSON(&nftentries); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err := db.DB.Save(&copies).Error; err != nil {
+	if err := db.DB.Save(&nftentries).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, copies)
+	c.JSON(http.StatusOK, nftentries)
 }
 
-func DeleteCopies(c *gin.Context) {
+func DeleteNftEntries(c *gin.Context) {
 	id := c.Param("id")
-	if err := db.DB.Delete(&models.Copies{}, "id = ?", id).Error; err != nil {
+	if err := db.DB.Delete(&models.NftEntries{}, "id = ?", id).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "Copies deleted successfully"})
+	c.JSON(http.StatusOK, gin.H{"message": "nftentries deleted successfully"})
 }
