@@ -115,6 +115,15 @@ func Routes(r *gin.Engine) {
 	r.GET("/nftentries/owner/:phygital_id/:copy_number", controllers.GetOwnerByPhygitalAndCopyNumber)
 	r.PUT("/nftentries/:id", controllers.UpdateNftEntries)
 	r.DELETE("/nftentries/:id", controllers.DeleteNftEntries)
+
+	//Profile routes
+	r.POST("/profiles", controllers.CreateProfile)
+	r.GET("/profiles/:id", controllers.GetProfile)
+	r.GET("/profiles/all", controllers.GetAllProfiles)
+	r.GET("/profiles/all/:chaintype_id", controllers.GetAllProfilesByChainType)
+	r.PUT("/profiles/:id", controllers.UpdateProfile)
+	r.DELETE("/profiles/:id", controllers.DeleteProfile)
+
 }
 
 
