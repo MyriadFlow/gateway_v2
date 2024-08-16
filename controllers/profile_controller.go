@@ -89,3 +89,14 @@ func DeleteProfile(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Profile deleted"})
 }
+
+func GetEmailByWalletAddress(c *gin.Context) {
+	walletAddress := c.Param("walletAddress")
+	var profile models.Profile
+	if err := db.DB.Select("email").Where("wallet_address = ?", walletAddress).First(&profile).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Profile not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"email": profile.Email})
+}

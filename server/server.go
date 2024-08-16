@@ -121,6 +121,7 @@ func Routes(r *gin.Engine) {
 	r.GET("/profiles/:id", controllers.GetProfile)
 	r.GET("/profiles/all", controllers.GetAllProfiles)
 	r.GET("/profiles/all/:chaintype_id", controllers.GetAllProfilesByChainType)
+	r.GET("/profiles/email/:walletAddress", controllers.GetEmailByWalletAddress)
 	r.PUT("/profiles/:id", controllers.UpdateProfile)
 	r.DELETE("/profiles/:id", controllers.DeleteProfile)
 
