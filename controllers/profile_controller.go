@@ -57,11 +57,11 @@ func GetAllProfilesByChainType(c *gin.Context) {
 	c.JSON(http.StatusOK, profiles)
 }
 
-// UpdateProfile updates a profile by ID
+// UpdateProfile updates a profile by walletAddress
 func UpdateProfile(c *gin.Context) {
-	id := c.Param("id")
+	walletAddress := c.Param("walletAddress")
 	var profile models.Profile
-	if err := db.DB.First(&profile, "id = ?", id).Error; err != nil {
+	if err := db.DB.First(&profile, "wallet_address = ?", walletAddress).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Profile not found"})
 		return
 	}
