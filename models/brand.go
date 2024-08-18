@@ -20,7 +20,7 @@ type Brand struct {
 	AdditionalInfo  string    `json:"additional_info"`
 	Industry        string    `json:"industry"`
 	Tags            string    `json:"tags"`
-	Fees            float64   `json:"fees" gorm:"type:decimal(10,2)"`
+	Fees            float64   `json:"fees" gorm:"type:decimal(20,10)"`
 	PayoutAddress   string    `json:"payout_address"`
 	AccessMaster    string    `json:"access_master"`
 	TradeHub        string    `json:"trade_hub"`

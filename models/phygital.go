@@ -14,7 +14,7 @@ type Phygital struct {
 	BrandName       string         `json:"brand_name"`
 	Category        datatypes.JSON `gorm:"type:jsonb" json:"category"`
 	Description     string         `json:"description"`
-	Price           float64        `json:"price" gorm:"type:decimal(10,2)"`
+	Price           float64        `json:"price" gorm:"type:decimal(20,10)"`
 	Quantity        int            `json:"quantity"`
 	Royality        int            `json:"royality"`
 	Image           string         `json:"image"`
@@ -22,7 +22,7 @@ type Phygital struct {
 	ProductUrl      string         `json:"product_url"`
 	Color           string         `json:"color"`
 	Size            string         `json:"size"`
-	Weight          float64        `json:"weight" gorm:"type:decimal(10,2)"`
+	Weight          float64        `json:"weight" gorm:"type:decimal(20,10)"`
 	Material        string         `json:"material"`
 	Usage           string         `json:"usage"`
 	Quality         string         `json:"quality"`
