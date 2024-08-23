@@ -79,6 +79,13 @@ func UpdatePhygital(c *gin.Context) {
 		return
 	}
 
+	// Ensure the input Tags is properly converted to JSON
+	input.Tags, err1 = json.Marshal(input.Tags)
+	if err1 != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err1.Error()})
+		return
+	}
+
 	// Update fields
 	db.DB.Model(&Phygital).Updates(input)
 
