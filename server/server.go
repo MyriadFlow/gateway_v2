@@ -126,6 +126,11 @@ func Routes(r *gin.Engine) {
 	r.PUT("/profiles/:walletAddress", controllers.UpdateProfile)
 	r.DELETE("/profiles/:id", controllers.DeleteProfile)
 
+	// Cart routes
+	r.POST("/cart", controllers.AddToCart)
+	r.DELETE("/cart/:wallet_address/:phygital_id", controllers.RemoveFromCart)
+	r.GET("/cart/:wallet_address", controllers.GetCartItems)
+
 }
 
 
