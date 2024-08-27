@@ -14,6 +14,7 @@ type CartItem struct {
 	Name        	string    	`json:"name"`
 	Price       	*float64  	`json:"price" gorm:"type:decimal(20,10);"`
 	Image       	string    	`json:"image"`
+	Logo			string		`json:"logo"`
 	Quantity    	int       	`json:"quantity"`
 	CreatedAt   	time.Time 	`gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt   	time.Time 	`gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
