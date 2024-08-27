@@ -31,7 +31,7 @@ func AddToCart(c *gin.Context) {
 		}
 	} else {
 		// If the item exists, update the quantity
-		existingItem.Quantity += cartItem.Quantity
+		existingItem.Quantity += 1
 		if err := db.DB.Save(&existingItem).Error; err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
