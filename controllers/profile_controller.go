@@ -91,8 +91,8 @@ func DeleteProfile(c *gin.Context) {
 }
 
 func DeleteProfileByWalletAndEmail(c *gin.Context) {
-	walletAddress := c.Query("walletAddress")
-	email := c.Query("email")
+	walletAddress := c.Param("walletAddress")
+	email := c.Param("email")
 
 	// Check if both walletAddress and email are provided
 	if walletAddress == "" || email == "" {
