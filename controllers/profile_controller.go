@@ -90,6 +90,31 @@ func DeleteProfile(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Profile deleted"})
 }
 
+func DeleteProfileByWalletAndEmail(c *gin.Context) {
+	walletAddress := c.Query("wallet_address")
+	email := c.Query("email")
+
+	// Check if both walletAddress and email are provided
+	if walletAddress == "" || email == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Wallet address and email are required"})
+		return
+	}
+
+	// Attempt to delete the profile based on walletAddress and email
+	if err := db.DB.Where("wallet_address = ? AND email = ?", walletAddress, email).Delete(&models.Profile{}).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete profile"})
+		return
+	}
+
+	// Check if a profile was actually deleted
+	if db.DB.RowsAffected == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Profile not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Profile deleted successfully"})
+}
+
 func GetEmailByWalletAddress(c *gin.Context) {
 	walletAddress := c.Param("walletAddress")
 	var profile models.Profile

@@ -125,6 +125,7 @@ func Routes(r *gin.Engine) {
 	r.GET("/profiles/wallet/:walletAddress", controllers.GetProfileByWalletAddress)
 	r.PUT("/profiles/:walletAddress", controllers.UpdateProfile)
 	r.DELETE("/profiles/:id", controllers.DeleteProfile)
+	r.DELETE("/profiles", controllers.DeleteProfileByWalletAndEmail)
 
 	// Cart routes
 	r.POST("/cart", controllers.AddToCart)
