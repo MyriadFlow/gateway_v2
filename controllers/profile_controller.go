@@ -106,12 +106,6 @@ func DeleteProfileByWalletAndEmail(c *gin.Context) {
 		return
 	}
 
-	// Check if a profile was actually deleted
-	if db.DB.RowsAffected == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Profile not found"})
-		return
-	}
-
 	c.JSON(http.StatusOK, gin.H{"message": "Profile deleted successfully"})
 }
 
