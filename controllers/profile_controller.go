@@ -130,3 +130,14 @@ func GetProfileByWalletAddress(c *gin.Context) {
 
 	c.JSON(http.StatusOK, profile)
 }
+
+func GetProfileByUsername(c *gin.Context) {
+	Username := c.Param("username")
+	var profile models.Profile
+	if err := db.DB.Where("username = ?", Username).First(&profile).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Profile not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, profile)
+}
