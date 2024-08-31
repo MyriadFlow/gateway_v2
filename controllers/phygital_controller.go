@@ -37,6 +37,17 @@ func GetPhygital(c *gin.Context) {
 	c.JSON(http.StatusOK, oldPhygital)
 }
 
+func GetPhygitalByWalletAddress(c *gin.Context) {
+	deployer_address := c.Param("deployer_address")
+	var oldPhygital models.Phygital
+	if err := db.DB.First(&oldPhygital, "deployer_address = ?", deployer_address).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Phygital not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, oldPhygital)
+}
+
 // get all phygital api
 func GetAllPhygitalByChainType(c *gin.Context) {
 	chaintypeId := c.Param("chaintype_id")

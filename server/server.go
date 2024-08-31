@@ -61,6 +61,7 @@ func Routes(r *gin.Engine) {
 	// Phygital routes
 	r.POST("/phygitals", controllers.CreatePhygital)
 	r.GET("/phygitals/:id", controllers.GetPhygital)
+	r.GET("/phygitals/deployer_address/:deployer_address", controllers.GetPhygitalByWalletAddress)
 	r.GET("/phygitals/all/:chaintype_id", controllers.GetAllPhygitalByChainType)
 	r.GET("/phygitals/all", controllers.GetAllPhygital)
 	r.PUT("/phygitals/:id", controllers.UpdatePhygital)
