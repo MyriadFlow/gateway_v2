@@ -31,7 +31,7 @@ func Init() {
 
 	InitMigration(DB)
 
-	err = DB.Debug().AutoMigrate(&models.User{}, &models.Brand{}, &models.Collection{}, &models.Phygital{}, &models.WebXR{}, &models.Avatar{}, &models.Variant{} , &models.FanToken{} , &models.ChainType{} ,  &models.NftEntries{} , &models.Profile{} , &models.CartItem{})
+	err = DB.Debug().AutoMigrate(&models.User{}, &models.Brand{}, &models.Collection{}, &models.Phygital{}, &models.WebXR{}, &models.Avatar{}, &models.Variant{} , &models.FanToken{} , &models.ChainType{} ,  &models.NftEntries{} , &models.Profile{} , &models.CartItem{}, &models.OTPStore{} , &models.OTPData{})
 	if err != nil {
 		log.Fatalf("failed to migrate database: %v", err)
 	}
