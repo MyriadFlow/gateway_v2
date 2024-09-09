@@ -134,6 +134,10 @@ func Routes(r *gin.Engine) {
 	r.DELETE("/cart/:wallet_address/:phygital_id", controllers.RemoveFromCart)
 	r.GET("/cart/:wallet_address", controllers.GetCartItems)
 
+	// OTP routes
+	r.POST("/send-otp", controllers.SendOTPHandler) 
+	r.POST("/verify-otp", controllers.VerifyOTPHandler)
+
 }
 
 
