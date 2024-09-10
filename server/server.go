@@ -138,6 +138,8 @@ func Routes(r *gin.Engine) {
 	r.POST("/send-otp", controllers.SendOTPHandler) 
 	r.POST("/verify-otp", controllers.VerifyOTPHandler)
 
+	r.POST("/create-fan-token", controllers.CreateMainnetFanToken)
+
 }
 
 
