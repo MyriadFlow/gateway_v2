@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 
+	contract "app.myriadflow.com/abicontract"
 	"app.myriadflow.com/db"
 	"app.myriadflow.com/models"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -15,17 +16,16 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/gin-gonic/gin"
-
-	contract "app.myriadflow.com/abicontract" // ABI encoded code
 )
 
-func CreateMainnetFanTokenRequest(c *gin.Context) {
-	var req models.MainnetFanToken
+func DelegateMintFanToken(c *gin.Context) {
+	var req models.DelegateMintFanTokenRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
+	// Connect to Ethereum client
 	client, err := ethclient.Dial(os.Getenv("BASE_RPC_URL"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to connect to Ethereum client"})
@@ -74,38 +74,52 @@ func CreateMainnetFanTokenRequest(c *gin.Context) {
 	auth.Value = big.NewInt(0)     // in wei
 	auth.GasLimit = uint64(300000) // Adjust as needed
 	auth.GasPrice = gasPrice
-
+	// Create contract instance
 	contractAddress := common.HexToAddress(os.Getenv("CONTRACT_ADDRESS"))
 	instance, err := contract.NewAbicontract(contractAddress, client)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create contract instance"})
 		return
 	}
+	// Prepare transaction
+	auth, err = bind.NewKeyedTransactorWithChainID(privateKey, chainID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create transactor"})
+		return
+	}
 
-	// Convert nftContractAddress to common.Address
-	nftContractAddr := common.HexToAddress(req.NFTContractAddress)
+	// Convert parameters
+	creatorWallet := common.HexToAddress(req.CreatorWallet)
+	totalSupply, err := instance.TotalSupply(&bind.CallOpts{})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get total supply"})
+		return
+	}
 
+	// Increment the total supply by 1 to get the next token ID
+	nextTokenID := new(big.Int).Add(totalSupply, big.NewInt(1))
+	amount, ok := new(big.Int).SetString(req.Amount, 10)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid Amount"})
+		return
+	}
 	data := common.FromHex(req.Data)
 
-	tx, err := instance.CreateFanToken(auth, nftContractAddr, data, req.URI)
+	// Call DelegateMintFanToken function
+	tx, err := instance.DelegateMintFanToken(auth, creatorWallet, nextTokenID, amount, data)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to call CreateFanToken: %v", err)})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to call DelegateMintFanToken: %v", err)})
 		return
 	}
 
 	// Save the response to the database
+	req.TokenID = nextTokenID.String()
 	req.TxHash = tx.Hash().Hex()
 	result := db.DB.Create(&req)
 	if result.Error != nil {
-		fmt.Printf("Database error: %v\n", result.Error)
-		// Check if it's a validation error
-		if result.Error.Error() == "Error 1062: Duplicate entry" {
-			c.JSON(http.StatusConflict, gin.H{"error": "Duplicate entry in database"})
-		} else {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to save to database: %v", result.Error)})
-		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to save to database: %v", result.Error)})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "CreateFanToken transaction sent", "txHash": req.TxHash})
+	c.JSON(http.StatusOK, gin.H{"message": "DelegateMintFanToken transaction sent", "txHash": req.TxHash})
 }
