@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	// "app.myriadflow.com/models"
+	"app.myriadflow.com/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -31,10 +31,10 @@ func Init() {
 
 	InitMigration(DB)
 
-	// err = DB.Debug().AutoMigrate(&models.User{}, &models.Brand{}, &models.Collection{}, &models.Phygital{}, &models.WebXR{}, &models.Avatar{}, &models.Variant{} , &models.FanToken{} , &models.ChainType{} ,  &models.NftEntries{} , &models.Profile{} , &models.CartItem{}, &models.OTPStore{} , &models.OTPData{}, &models.MainnetFanToken{})
-	// if err != nil {
-	// 	log.Fatalf("failed to migrate database: %v", err)
-	// }
+	err = DB.Debug().AutoMigrate(&models.User{}, &models.Brand{}, &models.Collection{}, &models.Phygital{}, &models.WebXR{}, &models.Avatar{}, &models.Variant{} , &models.FanToken{} , &models.ChainType{} ,  &models.NftEntries{} , &models.Profile{} , &models.CartItem{}, &models.OTPStore{} , &models.OTPData{}, &models.MainnetFanToken{}, &models.DelegateMintFanTokenRequest{})
+	if err != nil {
+		log.Fatalf("failed to migrate database: %v", err)
+	}
 }
 
 func Connect() *gorm.DB {

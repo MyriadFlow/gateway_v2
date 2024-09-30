@@ -3,6 +3,7 @@ package controllers
 import (
 	"context"
 	"crypto/ecdsa"
+	"encoding/json"
 	"fmt"
 	"math/big"
 	"net/http"
@@ -81,23 +82,18 @@ func DelegateMintFanToken(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create contract instance"})
 		return
 	}
-	// Prepare transaction
-	auth, err = bind.NewKeyedTransactorWithChainID(privateKey, chainID)
+
+	// Get the token ID using PhygitalcontractAddrToToken
+	nftContractAddr := common.HexToAddress(req.NFTContractAddress)
+	tokenID, err := instance.PhygitalcontractAddrToToken(&bind.CallOpts{}, nftContractAddr)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create transactor"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get token ID"})
 		return
 	}
 
+	req.TokenID = tokenID.String()
 	// Convert parameters
 	creatorWallet := common.HexToAddress(req.CreatorWallet)
-	totalSupply, err := instance.TotalSupply(&bind.CallOpts{})
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get total supply"})
-		return
-	}
-
-	// Increment the total supply by 1 to get the next token ID
-	nextTokenID := new(big.Int).Add(totalSupply, big.NewInt(1))
 	amount, ok := new(big.Int).SetString(req.Amount, 10)
 	if !ok {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid Amount"})
@@ -106,14 +102,21 @@ func DelegateMintFanToken(c *gin.Context) {
 	data := common.FromHex(req.Data)
 
 	// Call DelegateMintFanToken function
-	tx, err := instance.DelegateMintFanToken(auth, creatorWallet, nextTokenID, amount, data)
+	tx, err := instance.DelegateMintFanToken(auth, creatorWallet, tokenID, amount, data)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to call DelegateMintFanToken: %v", err)})
 		return
 	}
 
+	// Convert tx to JSON
+	txJSON, err := json.MarshalIndent(tx, "", "  ")
+	if err != nil {
+		fmt.Printf("Error marshaling transaction to JSON: %v\n", err)
+	} else {
+		fmt.Printf("Transaction details:\n%s\n", string(txJSON))
+	}
+
 	// Save the response to the database
-	req.TokenID = nextTokenID.String()
 	req.TxHash = tx.Hash().Hex()
 	result := db.DB.Create(&req)
 	if result.Error != nil {
@@ -122,4 +125,75 @@ func DelegateMintFanToken(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "DelegateMintFanToken transaction sent", "txHash": req.TxHash})
+}
+
+
+func CreateMintFanToken(c *gin.Context) {
+	var fantoken models.DelegateMintFanTokenRequest
+	if err := c.ShouldBindJSON(&fantoken); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := db.DB.Create(&fantoken).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, fantoken)
+}
+
+
+func GetAllMintFanToken(c *gin.Context) {
+	var fantoken []models.DelegateMintFanTokenRequest
+	if err := db.DB.Find(&fantoken).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, fantoken)
+}
+
+func GetMintFanTokenByWalletAddress(c *gin.Context) {
+	walletAddress := c.Param("creator_wallet")
+	var fantoken []models.DelegateMintFanTokenRequest
+	if err := db.DB.Where("creator_wallet = ?", walletAddress).Find(&fantoken).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	if len(fantoken) == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "No MintFanToken found for the specified manager_id"})
+		return
+	}
+	c.JSON(http.StatusOK, fantoken)
+}
+
+func UpdateMintFanToken(c *gin.Context) {
+	id := c.Param("id")
+	var fantoken models.DelegateMintFanTokenRequest
+	if err := db.DB.First(&fantoken, "id = ?", id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "MintFanToken not found"})
+		return
+	}
+
+	if err := c.ShouldBindJSON(&fantoken); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := db.DB.Save(&fantoken).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, fantoken)
+}
+
+func DeleteMintFanToken(c *gin.Context) {
+	id := c.Param("id")
+	if err := db.DB.Delete(&models.DelegateMintFanTokenRequest{}, "id = ?", id).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "MintFanToken deleted successfully"})
 }

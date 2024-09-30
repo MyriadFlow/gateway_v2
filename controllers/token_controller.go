@@ -8,15 +8,15 @@ import (
 	"net/http"
 	"os"
 
+	contract "app.myriadflow.com/abicontract" // ABI encoded code
 	"app.myriadflow.com/db"
 	"app.myriadflow.com/models"
+	"encoding/json"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/gin-gonic/gin"
-
-	contract "app.myriadflow.com/abicontract" // ABI encoded code
 )
 
 func CreateMainnetFanTokenRequest(c *gin.Context) {
@@ -92,7 +92,14 @@ func CreateMainnetFanTokenRequest(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to call CreateFanToken: %v", err)})
 		return
 	}
-
+	// Convert tx to JSON
+	txJSON, err := json.MarshalIndent(tx, "", "  ")
+	if err != nil {
+		fmt.Printf("Error marshaling transaction to JSON: %v\n", err)
+	} else {
+		fmt.Printf("Transaction details:\n%s\n", string(txJSON))
+	}
+	
 	// Save the response to the database
 	req.TxHash = tx.Hash().Hex()
 	result := db.DB.Create(&req)

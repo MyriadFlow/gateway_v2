@@ -141,6 +141,11 @@ func Routes(r *gin.Engine) {
 	// CreateFanToken routes
 	r.POST("/create-fantoken", controllers.CreateMainnetFanTokenRequest)
 	r.POST("/delegate-mint-fantoken", controllers.DelegateMintFanToken)
+	r.POST("/create-mint-fantoken", controllers.CreateMintFanToken)
+	r.GET("/get-mint-fantoken", controllers.GetAllMintFanToken)
+	r.GET("/get-mint-fantoken/:creator_wallet", controllers.GetMintFanTokenByWalletAddress)
+	r.PUT("/update-mint-fantoken/:id", controllers.UpdateMintFanToken)
+	r.DELETE("/delete-mint-fantoken/:id", controllers.DeleteMintFanToken)
 
 }
 
