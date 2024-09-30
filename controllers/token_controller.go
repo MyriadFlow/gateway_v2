@@ -8,18 +8,18 @@ import (
 	"net/http"
 	"os"
 
+	contract "app.myriadflow.com/abicontract" // ABI encoded code
+	"app.myriadflow.com/db"
+	"app.myriadflow.com/models"
+	"encoding/json"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/gin-gonic/gin"
-	"app.myriadflow.com/models"
-	"app.myriadflow.com/db"
-
-	contract "app.myriadflow.com/contract" // ABI encoded code
 )
 
-func CreateMainnetFanToken(c *gin.Context) {
+func CreateMainnetFanTokenRequest(c *gin.Context) {
 	var req models.MainnetFanToken
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -76,31 +76,41 @@ func CreateMainnetFanToken(c *gin.Context) {
 	auth.GasPrice = gasPrice
 
 	contractAddress := common.HexToAddress(os.Getenv("CONTRACT_ADDRESS"))
-	instance, err := contract.NewContract(contractAddress, client)
+	instance, err := contract.NewAbicontract(contractAddress, client)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create contract instance"})
 		return
 	}
 
+	// Convert nftContractAddress to common.Address
 	nftContractAddr := common.HexToAddress(req.NFTContractAddress)
-	amount, ok := new(big.Int).SetString(req.Amount, 10)
-	if !ok {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid amount"})
-		return
-	}
+
 	data := common.FromHex(req.Data)
 
-	tx, err := instance.CreateFanToken(auth, nftContractAddr, amount, data, req.URI)
+	tx, err := instance.CreateFanToken(auth, nftContractAddr, data, req.URI)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to call CreateFanToken: %v", err)})
 		return
 	}
-
+	// Convert tx to JSON
+	txJSON, err := json.MarshalIndent(tx, "", "  ")
+	if err != nil {
+		fmt.Printf("Error marshaling transaction to JSON: %v\n", err)
+	} else {
+		fmt.Printf("Transaction details:\n%s\n", string(txJSON))
+	}
+	
 	// Save the response to the database
 	req.TxHash = tx.Hash().Hex()
 	result := db.DB.Create(&req)
 	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save to database"})
+		fmt.Printf("Database error: %v\n", result.Error)
+		// Check if it's a validation error
+		if result.Error.Error() == "Error 1062: Duplicate entry" {
+			c.JSON(http.StatusConflict, gin.H{"error": "Duplicate entry in database"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to save to database: %v", result.Error)})
+		}
 		return
 	}
 

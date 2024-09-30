@@ -7,17 +7,19 @@ import (
 	"gorm.io/gorm"
 )
 
-type MainnetFanToken struct {
-	ID                 uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
+type DelegateMintFanTokenRequest struct {
+	ID                 uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key"`
+	CreatorWallet      string    `json:"creatorWallet"`
 	NFTContractAddress string    `json:"nftContractAddress"`
+	TokenID            string    `json:"token_id"` // Using string to store big.Int
+	Amount             string    `json:"amount"`   // Using string to store big.Int
 	Data               string    `json:"data"`
-	URI                string    `json:"uri"`
 	TxHash             string    `json:"txHash"`
 	CreatedAt          time.Time `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt          time.Time `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }
 
-func (a *MainnetFanToken) BeforeCreate(tx *gorm.DB) (err error) {
+func (a *DelegateMintFanTokenRequest) BeforeCreate(tx *gorm.DB) (err error) {
 	a.ID = uuid.New()
 	return
 }
