@@ -31,7 +31,7 @@ func Init() {
 
 	InitMigration(DB)
 
-	err = DB.Debug().AutoMigrate(&models.User{}, &models.Brand{}, &models.Collection{}, &models.Phygital{}, &models.WebXR{}, &models.Avatar{}, &models.Variant{} , &models.FanToken{} , &models.ChainType{} ,  &models.NftEntries{} , &models.Profile{} , &models.CartItem{}, &models.OTPStore{} , &models.OTPData{}, &models.MainnetFanToken{}, &models.DelegateMintFanTokenRequest{})
+	err = DB.AutoMigrate(&models.User{}, &models.Brand{}, &models.Collection{}, &models.Phygital{}, &models.WebXR{}, &models.Avatar{}, &models.Variant{}, &models.FanToken{}, &models.ChainType{}, &models.NftEntries{}, &models.Profile{}, &models.CartItem{}, &models.OTPStore{}, &models.OTPData{}, &models.MainnetFanToken{}, &models.DelegateMintFanTokenRequest{})
 	if err != nil {
 		log.Fatalf("failed to migrate database: %v", err)
 	}
@@ -50,5 +50,5 @@ func Connect() *gorm.DB {
 	return DB
 }
 func InitMigration(db *gorm.DB) error {
-	return db.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"").Error
+	return db.Exec(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`).Error
 }
