@@ -29,7 +29,10 @@ func Init() {
 	}
 	log.Println("Successfully connected to the database!")
 
-	InitMigration(DB)
+	err = InitMigration(DB)
+	if err != nil {
+		log.Println(err)
+	}
 
 	err = DB.AutoMigrate(&models.User{}, &models.Brand{}, &models.Collection{}, &models.Phygital{}, &models.WebXR{}, &models.Avatar{}, &models.Variant{}, &models.FanToken{}, &models.ChainType{}, &models.NftEntries{}, &models.Profile{}, &models.CartItem{}, &models.OTPStore{}, &models.OTPData{}, &models.MainnetFanToken{}, &models.DelegateMintFanTokenRequest{})
 	if err != nil {
