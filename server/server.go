@@ -10,10 +10,10 @@ import (
 
 func Router() {
 	router := gin.Default()
-	if len(os.Getenv("GIN_MODE")) == 0 {
-		gin.SetMode(gin.ReleaseMode)
-	} else {
+	if os.Getenv("GIN_MODE") == "DEBUG" || os.Getenv("GIN_MODE") == "debug" {
 		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
 	}
 
 	// adding middleware server
@@ -46,7 +46,6 @@ func Routes(r *gin.Engine) {
 	r.PUT("/brands/:id", controllers.UpdateBrand)
 	r.DELETE("/brands/:id", controllers.DeleteBrand)
 	r.GET("/brands/manager/:manager_id", controllers.GetBrandsByManager)
-
 
 	// Collection routes
 	r.POST("/collections", controllers.CreateCollection)
@@ -95,18 +94,18 @@ func Routes(r *gin.Engine) {
 
 	//FanToken routes
 	r.POST("/fantoken", controllers.CreateFanToken)
-	r.GET("/fantoken/:id" , controllers.GetFanToken)
-	r.GET("fantoken/all/:chaintype_id" , controllers.GetAllFanTokenByChainType)
-	r.GET("fantoken/all" , controllers.GetAllFanToken)
-	r.PUT("fantoken/:id" , controllers.UpdateFanToken)
-	r.DELETE("fantoken/:id" , controllers.DeleteFanToken)
+	r.GET("/fantoken/:id", controllers.GetFanToken)
+	r.GET("fantoken/all/:chaintype_id", controllers.GetAllFanTokenByChainType)
+	r.GET("fantoken/all", controllers.GetAllFanToken)
+	r.PUT("fantoken/:id", controllers.UpdateFanToken)
+	r.DELETE("fantoken/:id", controllers.DeleteFanToken)
 
 	//ChainType routes
 	r.POST("/chains", controllers.CreateChain)
-    r.GET("/chains/:id", controllers.GetChain)
-    r.PUT("/chains/:id", controllers.UpdateChain)
-    r.DELETE("/chains/:id", controllers.DeleteChain)
-    r.GET("/chains", controllers.GetChains)
+	r.GET("/chains/:id", controllers.GetChain)
+	r.PUT("/chains/:id", controllers.UpdateChain)
+	r.DELETE("/chains/:id", controllers.DeleteChain)
+	r.GET("/chains", controllers.GetChains)
 
 	// NftEntries routes
 	r.POST("/nftentries", controllers.CreateNftEntries)
@@ -135,7 +134,7 @@ func Routes(r *gin.Engine) {
 	r.GET("/cart/:wallet_address", controllers.GetCartItems)
 
 	// OTP routes
-	r.POST("/send-otp", controllers.SendOTPHandler) 
+	r.POST("/send-otp", controllers.SendOTPHandler)
 	r.POST("/verify-otp", controllers.VerifyOTPHandler)
 
 	// CreateFanToken routes
@@ -148,5 +147,3 @@ func Routes(r *gin.Engine) {
 	r.DELETE("/delete-mint-fantoken/:id", controllers.DeleteMintFanToken)
 
 }
-
-
