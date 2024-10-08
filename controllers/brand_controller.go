@@ -68,6 +68,15 @@ func GetBrandsByManager(c *gin.Context) {
 	c.JSON(http.StatusOK, brands)
 }
 
+func GetAllBrandsByRegion(c *gin.Context) {
+	var brands []models.Brand
+	if err := db.DB.Where("elevate_region = ?", "Africa").Find(&brands).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, brands)
+}
+
 func UpdateBrand(c *gin.Context) {
 	id := c.Param("id")
 	var brand models.Brand

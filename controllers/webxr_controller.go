@@ -56,6 +56,15 @@ func GetAllWebXRByChainType(c *gin.Context) {
 	c.JSON(http.StatusOK, webxr)
 }
 
+func GetAllWebxrByRegion(c *gin.Context) {
+	var webxr []models.WebXR
+	if err := db.DB.Where("elevate_region = ?", "Africa").Find(&webxr).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, webxr)
+}
+
 func GetAllWebXR(c *gin.Context) {
 	var webxr []models.WebXR
 	if err := db.DB.Find(&webxr).Error; err != nil {

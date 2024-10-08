@@ -18,13 +18,13 @@ type Brand struct {
 	ContactEmail    string    `json:"contact_email"`
 	ContactPhone    string    `json:"contact_phone"`
 	ShippingAddress string    `json:"shipping_address"`
-	Website       	string    `json:"website"`
+	Website         string    `json:"website"`
 	Twitter         string    `json:"twitter"`
-	Instagram     	string    `json:"instagram"`
-	Facebook     	string    `json:"facebook"`
+	Instagram       string    `json:"instagram"`
+	Facebook        string    `json:"facebook"`
 	AdditionalLink  string    `json:"additional_link"`
-	Link     		string    `json:"link"`
-	Discord     	string    `json:"discord"`
+	Link            string    `json:"link"`
+	Discord         string    `json:"discord"`
 	AdditionalInfo  string    `json:"additional_info"`
 	Industry        string    `json:"industry"`
 	Tags            string    `json:"tags"`
@@ -34,8 +34,9 @@ type Brand struct {
 	TradeHub        string    `json:"trade_hub"`
 	Blockchain      string    `json:"blockchain"`
 	ChainID         string    `json:"chain_id"`
-	ChaintypeID  		uuid.UUID	   `gorm:"type:uuid" json:"chaintype_id"`
+	ChaintypeID     uuid.UUID `gorm:"type:uuid" json:"chaintype_id"`
 	ManagerID       string    `json:"manager_id"` //user walletaddress
+	ElevateRegion   string    `json:"elevate_region"`
 	CreatedAt       time.Time `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt       time.Time `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }

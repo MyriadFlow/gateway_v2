@@ -37,6 +37,15 @@ func GetPhygital(c *gin.Context) {
 	c.JSON(http.StatusOK, oldPhygital)
 }
 
+func GetAllPhygitalByRegion(c *gin.Context) {
+	var phygitals []models.Phygital
+	if err := db.DB.Where("elevate_region = ?", "Africa").Find(&phygitals).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, phygitals)
+}
+
 func GetPhygitalByWalletAddress(c *gin.Context) {
 	deployer_address := c.Param("deployer_address")
 	var oldPhygital models.Phygital

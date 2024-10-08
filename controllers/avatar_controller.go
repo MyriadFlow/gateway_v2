@@ -59,6 +59,15 @@ func GetAllAvatarsByChainType(c *gin.Context) {
 	c.JSON(http.StatusOK, avatars)
 }
 
+func GetAllAvatarByRegion(c *gin.Context) {
+	var avatars []models.Avatar
+	if err := db.DB.Where("elevate_region = ?", "Africa").Find(&avatars).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, avatars)
+}
+
 func GetAllAvatars(c *gin.Context) {
 	var avatars []models.Avatar
 	if err := db.DB.Find(&avatars).Error; err != nil {

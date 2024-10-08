@@ -18,8 +18,9 @@ type WebXR struct {
 	GoldReward         string         `json:"gold_reward"`
 	SilverReward       string         `json:"silver_reward"`
 	BronzeReward       string         `json:"bronze_reward"`
+	ElevateRegion      string         `json:"elevate_region"`
 	PhygitalID         string         `json:"phygital_id"`
-	ChaintypeID  		uuid.UUID	   `gorm:"type:uuid" json:"chaintype_id"`
+	ChaintypeID        uuid.UUID      `gorm:"type:uuid" json:"chaintype_id"`
 	CreatedAt          time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt          time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }

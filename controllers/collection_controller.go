@@ -33,6 +33,15 @@ func GetCollection(c *gin.Context) {
 	c.JSON(http.StatusOK, collection)
 }
 
+func GetAllCollectionByRegion(c *gin.Context) {
+	var collection []models.Collection
+	if err := db.DB.Where("elevate_region = ?", "Africa").Find(&collection).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, collection)
+}
+
 func GetCollectionByBrandId(c *gin.Context) {
 	brand_id := c.Param("brandId")
 	var collection models.Collection

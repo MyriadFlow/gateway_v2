@@ -47,6 +47,15 @@ func GetAllVariantByChainType(c *gin.Context) {
 	c.JSON(http.StatusOK, variants)
 }
 
+func GetAllVariantByRegion(c *gin.Context) {
+	var variants []models.Variant
+	if err := db.DB.Where("elevate_region = ?", "Africa").Find(&variants).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, variants)
+}
+
 func GetAllVariant(c *gin.Context) {
 	var variants []models.Variant
 	if err := db.DB.Find(&variants).Error; err != nil {

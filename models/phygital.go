@@ -13,9 +13,9 @@ type Phygital struct {
 	Name            string         `json:"name"`
 	BrandName       string         `json:"brand_name"`
 	Category        datatypes.JSON `gorm:"type:jsonb" json:"category"`
-	Tags        	datatypes.JSON `gorm:"type:jsonb" json:"tags"`
+	Tags            datatypes.JSON `gorm:"type:jsonb" json:"tags"`
 	Description     string         `json:"description"`
-	Price 			*float64 	   `json:"price" gorm:"type:decimal(20,10);"`
+	Price           *float64       `json:"price" gorm:"type:decimal(20,10);"`
 	Quantity        int            `json:"quantity"`
 	Royality        int            `json:"royality"`
 	Image           string         `json:"image"`
@@ -33,6 +33,7 @@ type Phygital struct {
 	DeployerAddress string         `json:"deployer_address"`
 	ContractAddress string         `json:"contract_address"`
 	GraphURL        string         `json:"graph_url"`
+	ElevateRegion   string         `json:"elevate_region"`
 	CollectionID    uuid.UUID      `json:"collection_id"`
 	ChaintypeID     uuid.UUID      `gorm:"type:uuid" json:"chaintype_id"`
 	CreatedAt       time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`

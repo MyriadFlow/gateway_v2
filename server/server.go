@@ -46,6 +46,7 @@ func Routes(r *gin.Engine) {
 	r.PUT("/brands/:id", controllers.UpdateBrand)
 	r.DELETE("/brands/:id", controllers.DeleteBrand)
 	r.GET("/brands/manager/:manager_id", controllers.GetBrandsByManager)
+	r.GET("/brands/region", controllers.GetAllBrandsByRegion)
 
 	// Collection routes
 	r.POST("/collections", controllers.CreateCollection)
@@ -56,6 +57,7 @@ func Routes(r *gin.Engine) {
 	r.PUT("/collections/:id", controllers.UpdateCollection)
 	r.PUT("/collections/brand-id/:brandId", controllers.UpdateCollectionByBrandId)
 	r.DELETE("/collections/:id", controllers.DeleteCollection)
+	r.GET("/collections/region", controllers.GetAllCollectionByRegion)
 
 	// Phygital routes
 	r.POST("/phygitals", controllers.CreatePhygital)
@@ -65,6 +67,7 @@ func Routes(r *gin.Engine) {
 	r.GET("/phygitals/all", controllers.GetAllPhygital)
 	r.PUT("/phygitals/:id", controllers.UpdatePhygital)
 	r.DELETE("/phygitals/:id", controllers.DeletePhygital)
+	r.GET("/phygitals/region", controllers.GetAllPhygitalByRegion)
 
 	// WebXR routes
 	r.POST("/webxr", controllers.CreateWebXR)
@@ -74,6 +77,7 @@ func Routes(r *gin.Engine) {
 	r.PUT("/webxr/:id", controllers.UpdateWebXR)
 	r.DELETE("/webxr/:id", controllers.DeleteWebXR)
 	r.GET("/webxr/phygital/:phygital_id", controllers.GetWebXRByPhygitalID)
+	r.GET("/webxr/region", controllers.GetAllWebxrByRegion)
 
 	// Avatar routes
 	r.POST("/avatars", controllers.CreateAvatar)
@@ -83,6 +87,7 @@ func Routes(r *gin.Engine) {
 	r.PUT("/avatars/:id", controllers.UpdateAvatar)
 	r.DELETE("/avatars/:id", controllers.DeleteAvatar)
 	r.GET("/avatars/phygital/:phygital_id", controllers.GetAvatarByPhygitalID)
+	r.GET("/avatars/region", controllers.GetAllAvatarByRegion)
 
 	// Variant routes
 	r.POST("/variants", controllers.CreateVariant)
@@ -91,6 +96,7 @@ func Routes(r *gin.Engine) {
 	r.GET("/variants/all", controllers.GetAllVariant)
 	r.PUT("/variants/:id", controllers.UpdateVariant)
 	r.DELETE("/variants/:id", controllers.DeleteVariant)
+	r.GET("/variants/region", controllers.GetAllVariantByRegion)
 
 	//FanToken routes
 	r.POST("/fantoken", controllers.CreateFanToken)
