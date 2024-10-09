@@ -19,6 +19,7 @@ type Profile struct {
 	Website       string    `json:"website"`
 	X             string    `json:"x"`
 	Instagram     string    `json:"instagram"`
+	Basename	  string	`json:"basename"`
 	ChaintypeID   uuid.UUID	   `gorm:"type:uuid" json:"chaintype_id"`
 	CreatedAt     time.Time `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt     time.Time `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`

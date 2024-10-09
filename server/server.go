@@ -152,4 +152,13 @@ func Routes(r *gin.Engine) {
 	r.PUT("/update-mint-fantoken/:id", controllers.UpdateMintFanToken)
 	r.DELETE("/delete-mint-fantoken/:id", controllers.DeleteMintFanToken)
 
+	//Elevate routes
+	r.POST("/elevate", controllers.CreateElevate)
+	r.GET("/elevate/:id", controllers.GetElevate)
+	r.GET("/elevate/all", controllers.GetAllElevate)
+	r.GET("/elevate/walletaddress/:walletAddress" , controllers.GetElevateByWalletAddress)
+	r.GET("/elevate/all/:chaintype_id", controllers.GetAllElevateByChainType)
+	r.PUT("/elevate/:id", controllers.UpdateElevate)
+	r.DELETE("/elevate/:id", controllers.DeleteElevate)
+
 }

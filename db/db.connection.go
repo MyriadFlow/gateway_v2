@@ -34,7 +34,7 @@ func Init() {
 		log.Println(err)
 	}
 
-	err = DB.AutoMigrate(&models.User{}, &models.Brand{}, &models.Collection{}, &models.Phygital{}, &models.WebXR{}, &models.Avatar{}, &models.Variant{}, &models.FanToken{}, &models.ChainType{}, &models.NftEntries{}, &models.Profile{}, &models.CartItem{}, &models.OTPStore{}, &models.OTPData{}, &models.MainnetFanToken{}, &models.DelegateMintFanTokenRequest{})
+	err = DB.AutoMigrate(&models.User{}, &models.Brand{}, &models.Collection{}, &models.Phygital{}, &models.WebXR{}, &models.Avatar{}, &models.Variant{}, &models.FanToken{}, &models.ChainType{}, &models.NftEntries{}, &models.Profile{}, &models.CartItem{}, &models.OTPStore{}, &models.OTPData{}, &models.MainnetFanToken{}, &models.DelegateMintFanTokenRequest{} , &models.Elevate{})
 	if err != nil {
 		log.Fatalf("failed to migrate database: %v", err)
 	}
