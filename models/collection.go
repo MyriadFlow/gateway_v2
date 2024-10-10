@@ -19,6 +19,7 @@ type Collection struct {
 	Status        int            `json:"status"`
 	BrandID       string         `json:"brand_id"`
 	ElevateRegion string         `json:"elevate_region"`
+	AdditionalInfo  string    	 `json:"additional_info"`
 	ChaintypeID   uuid.UUID      `gorm:"type:uuid" json:"chaintype_id"`
 	CreatedAt     time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt     time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
