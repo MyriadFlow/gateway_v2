@@ -41,6 +41,7 @@ func Routes(r *gin.Engine) {
 	// Brand routes
 	r.POST("/brands", controllers.CreateBrand)
 	r.GET("/brands/:id", controllers.GetBrand)
+	r.GET("/brands/name/:name", controllers.GetBrandByName)
 	r.GET("/brands/all/:chaintype_id", controllers.GetAllBrandsByChainType)
 	r.GET("/brands/all", controllers.GetAllBrands)
 	r.PUT("/brands/:id", controllers.UpdateBrand)

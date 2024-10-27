@@ -34,6 +34,17 @@ func GetBrand(c *gin.Context) {
 	c.JSON(http.StatusOK, brand)
 }
 
+func GetBrandByName(c *gin.Context) {
+	name := c.Param("name")
+	var brand models.Brand
+	if err := db.DB.First(&brand, "name = ?", name).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Brand not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, brand)
+}
+
 // get all brands api
 func GetAllBrandsByChainType(c *gin.Context) {
 	chaintypeId := c.Param("chaintype_id")
