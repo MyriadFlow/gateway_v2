@@ -1,11 +1,13 @@
 package controllers
 
 import (
-	"app.myriadflow.com/db"
-	"app.myriadflow.com/models"
 	"net/http"
 
+	"app.myriadflow.com/db"
+	"app.myriadflow.com/models"
+
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 // CreateProfile creates a new profile
@@ -140,4 +142,71 @@ func GetProfileByUsername(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, profile)
+}
+
+func SaveAddresses(c *gin.Context) {
+	var addresses []models.Address
+	if err := c.ShouldBindJSON(&addresses); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	profileID := c.Param("profile_id") // Get profile ID from URL parameter
+	for i := range addresses {
+		addresses[i].ProfileID, _ = uuid.Parse(profileID)
+	}
+
+	if err := db.DB.Create(&addresses).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, addresses)
+}
+
+func GetAddresses(c *gin.Context) {
+	profileID := c.Param("profile_id")
+	var addresses []models.Address
+	if err := db.DB.Where("profile_id = ?", profileID).Find(&addresses).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Addresses not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, addresses)
+}
+
+func UpdateAddress(c *gin.Context) {
+	profileID := c.Param("profile_id")
+	var addresses []models.Address
+
+	if err := c.ShouldBindJSON(&addresses); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	for _, address := range addresses {
+		profileUUID, err := uuid.Parse(profileID)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid profile ID format"})
+			return
+		}
+		address.ProfileID = profileUUID
+
+		if err := db.DB.Save(&address).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
+	c.JSON(http.StatusOK, addresses)
+}
+
+func DeleteAddress(c *gin.Context) {
+	ID := c.Param("id")
+	if err := db.DB.Delete(&models.Address{}, "id = ?", ID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Address not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Address deleted"})
 }
