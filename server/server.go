@@ -26,7 +26,7 @@ func Router() {
 		})
 	})
 	Routes(router)
-	router.Run(":9090") // listen and serve on 0.0.0.0:808
+	router.Run(":" + os.Getenv("APP_PORT")) // listen and serve on 0.0.0.0:808
 }
 
 func Routes(r *gin.Engine) {
@@ -125,8 +125,8 @@ func Routes(r *gin.Engine) {
 
 	//Profile routes
 	r.POST("/profiles", controllers.CreateProfile)
-	r.POST("/profiles/addresses/:profile_id" , controllers.SaveAddresses)
-	r.GET("/profiles/addresses/:profile_id" , controllers.GetAddresses)
+	r.POST("/profiles/addresses/:profile_id", controllers.SaveAddresses)
+	r.GET("/profiles/addresses/:profile_id", controllers.GetAddresses)
 	r.GET("/profiles/:id", controllers.GetProfile)
 	r.GET("/profiles/all", controllers.GetAllProfiles)
 	r.GET("/profiles/all/:chaintype_id", controllers.GetAllProfilesByChainType)
@@ -134,10 +134,10 @@ func Routes(r *gin.Engine) {
 	r.GET("/profiles/wallet/:walletAddress", controllers.GetProfileByWalletAddress)
 	r.GET("/profiles/username/:username", controllers.GetProfileByUsername)
 	r.PUT("/profiles/:walletAddress", controllers.UpdateProfile)
-	r.PUT("/profiles/addresses/:profile_id" , controllers.UpdateAddress)
+	r.PUT("/profiles/addresses/:profile_id", controllers.UpdateAddress)
 	r.DELETE("/profiles/:id", controllers.DeleteProfile)
 	r.DELETE("/profiles/walletandemail/:walletAddress/:email", controllers.DeleteProfileByWalletAndEmail)
-	r.DELETE("/profiles/addresses/:id" , controllers.DeleteAddress)
+	r.DELETE("/profiles/addresses/:id", controllers.DeleteAddress)
 
 	// Cart routes
 	r.POST("/cart", controllers.AddToCart)
@@ -161,7 +161,7 @@ func Routes(r *gin.Engine) {
 	r.POST("/elevate", controllers.CreateElevate)
 	r.GET("/elevate/:id", controllers.GetElevate)
 	r.GET("/elevate/all", controllers.GetAllElevate)
-	r.GET("/elevate/walletaddress/:walletAddress" , controllers.GetElevateByWalletAddress)
+	r.GET("/elevate/walletaddress/:walletAddress", controllers.GetElevateByWalletAddress)
 	r.GET("/elevate/all/:chaintype_id", controllers.GetAllElevateByChainType)
 	r.PUT("/elevate/:id", controllers.UpdateElevate)
 	r.DELETE("/elevate/:id", controllers.DeleteElevate)
