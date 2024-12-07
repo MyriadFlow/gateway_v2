@@ -19,29 +19,29 @@ func CreatePhygital(c *gin.Context) {
 		return
 	}
 
-	if len(phygital.Images) == 0 {
+	if len(reqPhygital.Images) == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "At least one image is required"})
 		return
 	}
-	if phygital.SizeOption != "one_size_only" && phygital.SizeOption != "one_size_with_measurements" && phygital.SizeOption != "multiple_sizes" {
+
+	if reqPhygital.SizeOption != 0 && reqPhygital.SizeOption != 1 && reqPhygital.SizeOption != 2 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid size option"})
 		return
 	}
 
-	if phygital.SizeOption == "one_size_with_measurements" {
-		
+	if reqPhygital.SizeOption == 1 {
+
 		var sizeDetails map[string]interface{}
 		if err := json.Unmarshal(phygital.SizeDetails, &sizeDetails); err != nil || len(sizeDetails) == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Size details are required for 'one_size_with_measurements' option"})
 			return
 		}
-	} else if phygital.SizeOption == "multiple_sizes" {
+	} else if reqPhygital.SizeOption == 2 {
 		if len(phygital.SizeDetails) == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Size details are required for 'multiple_sizes' option"})
 			return
 		}
 
-	
 		// for _, sizeDetail := range phygital.SizeDetails {
 		// 	if sizeDetail.Size == "" {
 		// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Size is required for each entry in size_details"})
@@ -97,7 +97,7 @@ func GetPhygitalByWalletAddress(c *gin.Context) {
 func GetAllPhygitalByChainType(c *gin.Context) {
 	chaintypeId := c.Param("chaintype_id")
 	var phygitals []models.Phygital
-	if err := db.DB.Where("chaintype_id = ? " , chaintypeId).Find(&phygitals).Error; err != nil {
+	if err := db.DB.Where("chaintype_id = ? ", chaintypeId).Find(&phygitals).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

@@ -5,25 +5,24 @@ import (
 
 	"github.com/google/uuid"
 	"gorm.io/datatypes"
-	"gorm.io/gorm"
 )
 
 type RequestPhygital struct {
-	Name            string         `json:"name"`
-	BrandName       string         `json:"brand_name"`
-	Category        datatypes.JSON ` json:"category"`
-	Tags            datatypes.JSON ` json:"tags"`
-	Description     string         `json:"description"`
-	Price           float64       `json:"price" gorm:"type:decimal(20,10);"`
-	Quantity        int            `json:"quantity"`
-	Royality        int            `json:"royality"`
+	Name        string         `json:"name"`
+	BrandName   string         `json:"brand_name"`
+	Category    datatypes.JSON ` json:"category"`
+	Tags        datatypes.JSON ` json:"tags"`
+	Description string         `json:"description"`
+	Price       float64        `json:"price" gorm:"type:decimal(20,10);"`
+	Quantity    int            `json:"quantity"`
+	Royality    int            `json:"royality"`
 	// Image           string         `json:"image"`
-	Images          datatypes.JSON `gorm:"type:jsonb" json:"images"`
-	ProductInfo     string         `json:"product_info"`
-	ProductUrl      string         `json:"product_url"`
-	Color           string         `json:"color"`
+	Images      datatypes.JSON `gorm:"type:jsonb" json:"images"`
+	ProductInfo string         `json:"product_info"`
+	ProductUrl  string         `json:"product_url"`
+	Color       string         `json:"color"`
 	// Size            string         `json:"size"`
-	SizeOption      string         `json:"size_option"` 
+	SizeOption      int            `json:"size_option"`
 	SizeDetails     datatypes.JSON `gorm:"type:jsonb" json:"size_details"`
 	Weight          float64        `json:"weight" gorm:"type:decimal(20,10)"`
 	Material        string         `json:"material"`
@@ -42,7 +41,7 @@ type RequestPhygital struct {
 	UpdatedAt       time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }
 
-func (p *Phygital) BeforeCreate(tx *gorm.DB) (err error) {
-	p.ID = uuid.New()
-	return
-}
+// func (p *RequestPhygital) BeforeCreate(tx *gorm.DB) (err error) {
+// 	p.ID = uuid.New()
+// 	return
+// }

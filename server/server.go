@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"app.myriadflow.com/controllers"
+	phygital_controllers "app.myriadflow.com/controllers/phygital"
 	"app.myriadflow.com/middleware"
 	"github.com/gin-gonic/gin"
 )
@@ -61,14 +62,14 @@ func Routes(r *gin.Engine) {
 	r.GET("/collections/region", controllers.GetAllCollectionByRegion)
 
 	// Phygital routes
-	r.POST("/phygitals", controllers.CreatePhygital)
-	r.GET("/phygitals/:id", controllers.GetPhygital)
-	r.GET("/phygitals/deployer_address/:deployer_address", controllers.GetPhygitalByWalletAddress)
-	r.GET("/phygitals/all/:chaintype_id", controllers.GetAllPhygitalByChainType)
-	r.GET("/phygitals/all", controllers.GetAllPhygital)
-	r.PUT("/phygitals/:id", controllers.UpdatePhygital)
-	r.DELETE("/phygitals/:id", controllers.DeletePhygital)
-	r.GET("/phygitals/region", controllers.GetAllPhygitalByRegion)
+	r.POST("/phygitals", phygital_controllers.CreatePhygital)
+	r.GET("/phygitals/:id", phygital_controllers.GetPhygital)
+	r.GET("/phygitals/deployer_address/:deployer_address", phygital_controllers.GetPhygitalByWalletAddress)
+	r.GET("/phygitals/all/:chaintype_id", phygital_controllers.GetAllPhygitalByChainType)
+	r.GET("/phygitals/all", phygital_controllers.GetAllPhygital)
+	r.PUT("/phygitals/:id", phygital_controllers.UpdatePhygital)
+	r.DELETE("/phygitals/:id", phygital_controllers.DeletePhygital)
+	r.GET("/phygitals/region", phygital_controllers.GetAllPhygitalByRegion)
 
 	// WebXR routes
 	r.POST("/webxr", controllers.CreateWebXR)
