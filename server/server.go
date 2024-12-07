@@ -1,10 +1,12 @@
 package server
 
 import (
+	"net/http"
 	"os"
 
 	"app.myriadflow.com/controllers"
 	phygital_controllers "app.myriadflow.com/controllers/phygital"
+	"app.myriadflow.com/db"
 	"app.myriadflow.com/middleware"
 	"github.com/gin-gonic/gin"
 )
@@ -26,6 +28,33 @@ func Router() {
 			"message": "pong",
 		})
 	})
+
+	router.GET("/ping_database", func(c *gin.Context) {
+		DB := db.Connect()
+
+		// Retrieve the underlying SQL database object from GORM
+		sqlDB, err := DB.DB()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Failed to retrieve database object: " + err.Error(),
+			})
+			return
+		}
+
+		// Ping the database to check if the connection is active
+		if err := sqlDB.Ping(); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Database connection error: " + err.Error(),
+			})
+			return
+		}
+
+		// If the ping is successful
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Database connection successful!",
+		})
+	})
+	
 	Routes(router)
 	router.Run(":" + os.Getenv("APP_PORT")) // listen and serve on 0.0.0.0:808
 }

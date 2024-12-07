@@ -40,8 +40,3 @@ type RequestPhygital struct {
 	CreatedAt       time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt       time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }
-
-// func (p *RequestPhygital) BeforeCreate(tx *gorm.DB) (err error) {
-// 	p.ID = uuid.New()
-// 	return
-// }

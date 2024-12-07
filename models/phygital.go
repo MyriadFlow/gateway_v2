@@ -8,12 +8,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// type SizeDetail struct {
-// 	Size              string `json:"size"`
-// 	Quantity          int    `json:"quantity"`
-// 	AdditionalDetails string `json:"additional_details"`
-// }
-
 type Phygital struct {
 	ID          uuid.UUID      `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
 	Name        string         `json:"name"`
@@ -24,13 +18,11 @@ type Phygital struct {
 	Price       *float64       `json:"price" gorm:"type:decimal(20,10);"`
 	Quantity    int            `json:"quantity"`
 	Royality    int            `json:"royality"`
-	// Image           string         `json:"image"`
 	Images      datatypes.JSON `gorm:"type:jsonb" json:"images"`
 	ProductInfo string         `json:"product_info"`
 	ProductUrl  string         `json:"product_url"`
 	Color       string         `json:"color"`
-	// Size            string         `json:"size"`
-	SizeOption      string         `json:"size_option"`
+	SizeOption      int         `json:"size_option"`
 	SizeDetails     datatypes.JSON `gorm:"type:jsonb" json:"size_details"`
 	Weight          float64        `json:"weight" gorm:"type:decimal(20,10)"`
 	Material        string         `json:"material"`

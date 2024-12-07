@@ -6,6 +6,7 @@ import (
 
 	"app.myriadflow.com/db"
 	"app.myriadflow.com/models"
+	"gorm.io/datatypes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,6 +15,7 @@ func CreatePhygital(c *gin.Context) {
 
 	var phygital models.Phygital
 	var reqPhygital RequestPhygital
+
 	if err := c.ShouldBindJSON(&reqPhygital); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -25,34 +27,47 @@ func CreatePhygital(c *gin.Context) {
 	}
 
 	if reqPhygital.SizeOption != 0 && reqPhygital.SizeOption != 1 && reqPhygital.SizeOption != 2 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid size option"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid size option. Must be 0, 1, or 2."})
 		return
 	}
 
-	if reqPhygital.SizeOption == 1 {
-
-		var sizeDetails map[string]interface{}
-		if err := json.Unmarshal(phygital.SizeDetails, &sizeDetails); err != nil || len(sizeDetails) == 0 {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Size details are required for 'one_size_with_measurements' option"})
+	if reqPhygital.SizeOption == 0 {
+		phygital.SizeDetails = datatypes.JSON([]byte("{}")) // Store empty JSON for `SizeOption == 0`
+	} else {
+		if len(reqPhygital.SizeDetails) == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "SizeDetails is required for SizeOption 1 or 2."})
 			return
 		}
-	} else if reqPhygital.SizeOption == 2 {
-		if len(phygital.SizeDetails) == 0 {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Size details are required for 'multiple_sizes' option"})
-			return
-		}
-
-		// for _, sizeDetail := range phygital.SizeDetails {
-		// 	if sizeDetail.Size == "" {
-		// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Size is required for each entry in size_details"})
-		// 		return
-		// 	}
-		// 	if sizeDetail.Quantity <= 0 {
-		// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Quantity must be greater than 0"})
-		// 		return
-		// 	}
-		// }
+		phygital.SizeDetails = reqPhygital.SizeDetails // Store incoming JSON object
 	}
+
+	
+	phygital.Name = reqPhygital.Name
+	phygital.BrandName = reqPhygital.BrandName
+	phygital.Category = reqPhygital.Category
+	phygital.Tags = reqPhygital.Tags
+	phygital.Description = reqPhygital.Description
+	phygital.Price = &reqPhygital.Price
+	phygital.Quantity = reqPhygital.Quantity
+	phygital.Royality = reqPhygital.Royality
+	phygital.Images = reqPhygital.Images
+	phygital.ProductInfo = reqPhygital.ProductInfo
+	phygital.ProductUrl = reqPhygital.ProductUrl
+	phygital.Color = reqPhygital.Color
+	phygital.SizeOption = reqPhygital.SizeOption
+	phygital.Weight = reqPhygital.Weight
+	phygital.Material = reqPhygital.Material
+	phygital.Usage = reqPhygital.Usage
+	phygital.Quality = reqPhygital.Quality
+	phygital.Manufacturer = reqPhygital.Manufacturer
+	phygital.OriginCountry = reqPhygital.OriginCountry
+	phygital.MetadataURI = reqPhygital.MetadataURI
+	phygital.DeployerAddress = reqPhygital.DeployerAddress
+	phygital.ContractAddress = reqPhygital.ContractAddress
+	phygital.GraphURL = reqPhygital.GraphURL
+	phygital.ElevateRegion = reqPhygital.ElevateRegion
+	phygital.CollectionID = reqPhygital.CollectionID
+	phygital.ChaintypeID = reqPhygital.ChaintypeID
 
 	if err := db.DB.Create(&phygital).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
