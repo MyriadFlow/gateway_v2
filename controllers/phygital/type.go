@@ -1,4 +1,4 @@
-package models
+package phygital_controllers
 
 import (
 	"time"
@@ -8,21 +8,13 @@ import (
 	"gorm.io/gorm"
 )
 
-
-type SizeDetail struct {
-	Size            string `json:"size"`
-	Quantity        int    `json:"quantity"`
-	AdditionalDetails string `json:"additional_details"`
-}
-
-type Phygital struct {
-	ID              uuid.UUID      `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
+type RequestPhygital struct {
 	Name            string         `json:"name"`
 	BrandName       string         `json:"brand_name"`
-	Category        datatypes.JSON `gorm:"type:jsonb" json:"category"`
-	Tags            datatypes.JSON `gorm:"type:jsonb" json:"tags"`
+	Category        datatypes.JSON ` json:"category"`
+	Tags            datatypes.JSON ` json:"tags"`
 	Description     string         `json:"description"`
-	Price           *float64       `json:"price" gorm:"type:decimal(20,10);"`
+	Price           float64       `json:"price" gorm:"type:decimal(20,10);"`
 	Quantity        int            `json:"quantity"`
 	Royality        int            `json:"royality"`
 	// Image           string         `json:"image"`

@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
+
 type Brand struct {
 	ID              uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
 	Name            string    `json:"name"`
@@ -22,9 +23,17 @@ type Brand struct {
 	Twitter         string    `json:"twitter"`
 	Instagram       string    `json:"instagram"`
 	Facebook        string    `json:"facebook"`
+	Telegram        string    `json:"telegram"`
+	LinkedIn        string    `json:"linkedin"`
+	Youtube        string    `json:"youtube"`
+	Discord        string    `json:"discord"`
+	Whatsapp        string    `json:"whatsapp"`
+	Google          string     `json:"google"`
+	Tiktok          string     `json:"tiktok"`
+	Snapchat          string     `json:"snapchat"`
+	Pinetrest          string     `json:"pinetrest"`
 	AdditionalLink  string    `json:"additional_link"`
 	Link            string    `json:"link"`
-	Discord         string    `json:"discord"`
 	AdditionalInfo  string    `json:"additional_info"`
 	Industry        string    `json:"industry"`
 	Tags            string    `json:"tags"`

@@ -33,6 +33,22 @@ func GetBrand(c *gin.Context) {
 
 	c.JSON(http.StatusOK, brand)
 }
+func GetBrandsByUserID(c *gin.Context) {
+	userID := c.Param("userID") 
+	var brands []models.Brand   
+
+	if err := db.DB.Where("user_id = ?", userID).Find(&brands).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	if len(brands) == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"message": "No brands found for the user"})
+		return
+	}
+
+	c.JSON(http.StatusOK, brands)
+}
 
 func GetBrandByName(c *gin.Context) {
 	name := c.Param("name")

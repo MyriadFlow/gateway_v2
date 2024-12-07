@@ -1,4 +1,4 @@
-package controllers
+package phygital_controllers
 
 import (
 	"encoding/json"
@@ -13,9 +13,45 @@ import (
 func CreatePhygital(c *gin.Context) {
 
 	var phygital models.Phygital
-	if err := c.ShouldBindJSON(&phygital); err != nil {
+	var reqPhygital RequestPhygital
+	if err := c.ShouldBindJSON(&reqPhygital); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
+	}
+
+	if len(phygital.Images) == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "At least one image is required"})
+		return
+	}
+	if phygital.SizeOption != "one_size_only" && phygital.SizeOption != "one_size_with_measurements" && phygital.SizeOption != "multiple_sizes" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid size option"})
+		return
+	}
+
+	if phygital.SizeOption == "one_size_with_measurements" {
+		
+		var sizeDetails map[string]interface{}
+		if err := json.Unmarshal(phygital.SizeDetails, &sizeDetails); err != nil || len(sizeDetails) == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Size details are required for 'one_size_with_measurements' option"})
+			return
+		}
+	} else if phygital.SizeOption == "multiple_sizes" {
+		if len(phygital.SizeDetails) == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Size details are required for 'multiple_sizes' option"})
+			return
+		}
+
+	
+		// for _, sizeDetail := range phygital.SizeDetails {
+		// 	if sizeDetail.Size == "" {
+		// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Size is required for each entry in size_details"})
+		// 		return
+		// 	}
+		// 	if sizeDetail.Quantity <= 0 {
+		// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Quantity must be greater than 0"})
+		// 		return
+		// 	}
+		// }
 	}
 
 	if err := db.DB.Create(&phygital).Error; err != nil {
