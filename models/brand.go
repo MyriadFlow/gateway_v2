@@ -46,6 +46,7 @@ type Brand struct {
 	ChaintypeID     uuid.UUID `gorm:"type:uuid" json:"chaintype_id"`
 	ManagerID       string    `json:"manager_id"` //user walletaddress
 	ElevateRegion   string    `json:"elevate_region"`
+	WebXRExperienceWithAiAvatar bool `json:"webxr_experience_with_ai_avatar"`
 	CreatedAt       time.Time `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt       time.Time `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }
