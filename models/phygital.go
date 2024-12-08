@@ -39,9 +39,32 @@ type Phygital struct {
 	ChaintypeID     uuid.UUID      `gorm:"type:uuid" json:"chaintype_id"`
 	CreatedAt       time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt       time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
+
+	ShippingZones datatypes.JSON `gorm:"type:jsonb" json:"shipping_zones"`
+
+
 }
+
+// type ShippingZone struct {
+// 	ID               uuid.UUID   `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
+// 	PhygitalID   uuid.UUID `gorm:"type:uuid" json:"phygital_id"`
+// 	ZoneName         string      `json:"zone_name"`
+// 	Continents        datatypes.JSON `gorm:"type:jsonb" json:"continents"`
+// 	Countries        datatypes.JSON `gorm:"type:jsonb" json:"countries"`
+// 	DeliveryDaysMin  int         `json:"delivery_days_min"`
+// 	DeliveryDaysMax  int         `json:"delivery_days_max"`
+// 	ShippingPrice    float64     `json:"shipping_price" gorm:"type:decimal(20,10)"`
+// 	PerOrderFeeLimit    bool           `json:"per_order_fee_limit"`
+// 	CreatedAt        time.Time   `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
+// 	UpdatedAt        time.Time   `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
+// }
 
 func (p *Phygital) BeforeCreate(tx *gorm.DB) (err error) {
 	p.ID = uuid.New()
 	return
 }
+
+// func (s *ShippingZone) BeforeCreate(tx *gorm.DB) (err error) {
+// 	s.ID = uuid.New()
+// 	return
+// }

@@ -69,6 +69,14 @@ func CreatePhygital(c *gin.Context) {
 	phygital.CollectionID = reqPhygital.CollectionID
 	phygital.ChaintypeID = reqPhygital.ChaintypeID
 
+	shippingZonesJSON, err := json.Marshal(reqPhygital.ShippingZones)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error marshalling shipping zones"})
+		return
+	}
+
+	phygital.ShippingZones = datatypes.JSON(shippingZonesJSON)
+
 	if err := db.DB.Create(&phygital).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

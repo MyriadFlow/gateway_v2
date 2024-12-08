@@ -7,6 +7,16 @@ import (
 	"gorm.io/datatypes"
 )
 
+type ShippingZoneRequest struct {
+	ZoneName        string         `json:"zone_name"`
+	Continents       datatypes.JSON `json:"continents"`
+	Countries       datatypes.JSON `json:"countries"`
+	DeliveryDaysMin int            `json:"delivery_days_min"`
+	DeliveryDaysMax int            `json:"delivery_days_max"`
+	ShippingPrice   float64        `json:"shipping_price"`
+	PerOrderFeeLimit    bool           `json:"per_order_fee_limit"`
+}
+
 type RequestPhygital struct {
 	Name        string         `json:"name"`
 	BrandName   string         `json:"brand_name"`
@@ -37,6 +47,7 @@ type RequestPhygital struct {
 	ElevateRegion   string         `json:"elevate_region"`
 	CollectionID    uuid.UUID      `json:"collection_id"`
 	ChaintypeID     uuid.UUID      `gorm:"type:uuid" json:"chaintype_id"`
+	ShippingZones  []ShippingZoneRequest `json:"shipping_zones"`
 	CreatedAt       time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"created_at"`
 	UpdatedAt       time.Time      `gorm:"type:timestamp;default:current_timestamp" json:"updated_at"`
 }
