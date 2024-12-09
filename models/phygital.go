@@ -9,20 +9,20 @@ import (
 )
 
 type Phygital struct {
-	ID          uuid.UUID      `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
-	Name        string         `json:"name"`
-	BrandName   string         `json:"brand_name"`
-	Category    datatypes.JSON `gorm:"type:jsonb" json:"category"`
-	Tags        datatypes.JSON `gorm:"type:jsonb" json:"tags"`
-	Description string         `json:"description"`
-	Price       *float64       `json:"price" gorm:"type:decimal(20,10);"`
-	Quantity    int            `json:"quantity"`
-	Royality    int            `json:"royality"`
-	Images      datatypes.JSON `gorm:"type:jsonb" json:"images"`
-	ProductInfo string         `json:"product_info"`
-	ProductUrl  string         `json:"product_url"`
-	Color       string         `json:"color"`
-	SizeOption      int         `json:"size_option"`
+	ID              uuid.UUID      `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
+	Name            string         `json:"name"`
+	BrandName       string         `json:"brand_name"`
+	Category        datatypes.JSON `gorm:"type:jsonb" json:"category"`
+	Tags            datatypes.JSON `gorm:"type:jsonb" json:"tags"`
+	Description     string         `json:"description"`
+	Price           *float64       `json:"price" gorm:"type:decimal(20,10);"`
+	Quantity        int            `json:"quantity"`
+	Royality        int            `json:"royality"`
+	Image           string         `gorm:"type:text" json:"image"`
+	ProductInfo     string         `json:"product_info"`
+	ProductUrl      string         `json:"product_url"`
+	Color           string         `json:"color"`
+	SizeOption      int            `json:"size_option"`
 	SizeDetails     datatypes.JSON `gorm:"type:jsonb" json:"size_details"`
 	Weight          float64        `json:"weight" gorm:"type:decimal(20,10)"`
 	Material        string         `json:"material"`
@@ -42,7 +42,7 @@ type Phygital struct {
 
 	ShippingZones datatypes.JSON `gorm:"type:jsonb" json:"shipping_zones"`
 
-
+	Images datatypes.JSON `gorm:"type:jsonb" json:"images"`
 }
 
 // type ShippingZone struct {
