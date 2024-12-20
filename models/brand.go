@@ -11,6 +11,7 @@ import (
 type Brand struct {
 	ID              uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
 	Name            string    `json:"name"`
+	AgentId			string	  `json:"agent_id"`
 	Slogan          string    `json:"slogan"`
 	Description     string    `json:"description"`
 	LogoImage       string    `json:"logo_image"`
