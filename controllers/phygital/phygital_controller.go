@@ -9,6 +9,7 @@ import (
 	"gorm.io/datatypes"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 func CreatePhygital(c *gin.Context) {
@@ -41,7 +42,6 @@ func CreatePhygital(c *gin.Context) {
 		phygital.SizeDetails = reqPhygital.SizeDetails // Store incoming JSON object
 	}
 
-	
 	phygital.Name = reqPhygital.Name
 	phygital.BrandName = reqPhygital.BrandName
 	phygital.Category = reqPhygital.Category
@@ -77,8 +77,11 @@ func CreatePhygital(c *gin.Context) {
 
 	phygital.ShippingZones = datatypes.JSON(shippingZonesJSON)
 
-	if err := db.DB.Create(&phygital).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	tx := db.DB.Debug().Create(&phygital)
+
+	if tx.Error != nil {
+		logrus.Error(tx.Error)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": tx.Error})
 		return
 	}
 
