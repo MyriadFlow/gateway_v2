@@ -12,7 +12,12 @@ func init() {
 	if len(os.Getenv("HOST")) == 0 {
 		godotenv.Load()
 	}
-	db.Init()
+	dbS, err := db.Connect()
+	if err != nil {
+		panic(err)
+
+	}
+	db.Init(dbS)
 }
 
 func main() {
