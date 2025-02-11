@@ -122,6 +122,15 @@ func UpdateBrand(c *gin.Context) {
 		return
 	}
 
+	if condition := func(name string) bool {
+		return name != ""
+	}; condition(brand.Name) {
+		brand.SlugName = func(name string) string {
+			return strings.ToLower(strings.ReplaceAll(name, " ", "-"))
+		}(brand.Name)
+
+	}
+
 	if err := db.DB.Save(&brand).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
