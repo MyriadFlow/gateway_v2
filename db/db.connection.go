@@ -55,6 +55,13 @@ func Init(DB *gorm.DB) {
 
 	if err != nil {
 		log.Fatalf("failed to migrate database: %v", err)
+	} else {
+		log.Println("Database migrated successfully")
+		if err := UniqueConstraints(DB); err != nil {
+			log.Printf("failed to create unique constraints: %v", err)
+		} else {
+			log.Println("Unique constraints created successfully")
+		}
 	}
 }
 
@@ -75,4 +82,10 @@ func Connect() (*gorm.DB, error) {
 }
 func InitMigration(db *gorm.DB) error {
 	return db.Exec(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`).Error
+}
+
+func UniqueConstraints(db *gorm.DB) error {
+	uniqueSql := `ALTER TABLE brands ADD CONSTRAINT unique_brand_name UNIQUE (name);
+					ALTER TABLE brands ADD CONSTRAINT unique_slug_name UNIQUE (slug_name);`
+	return db.Exec(uniqueSql).Error
 }

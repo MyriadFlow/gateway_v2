@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strings"
 
 	"app.myriadflow.com/db"
 	"app.myriadflow.com/models"
@@ -14,6 +15,10 @@ func CreateBrand(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	brand.SlugName = func(name string) string {
+		return strings.ToLower(strings.ReplaceAll(name, " ", "-"))
+	}(brand.Name)
 
 	if err := db.DB.Create(&brand).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
