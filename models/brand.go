@@ -12,6 +12,7 @@ type Brand struct {
 	Name                        string    `json:"name"`
 	SlugName                    string    `gorm:"unique" json:"slug_name"`
 	AgentId                     string    `json:"agent_id"`
+	AvatarId                    string    `json:"avatar_id"`
 	Slogan                      string    `json:"slogan"`
 	Description                 string    `json:"description"`
 	LogoImage                   string    `json:"logo_image"`
