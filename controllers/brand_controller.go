@@ -58,7 +58,7 @@ func GetBrandsByUserID(c *gin.Context) {
 func GetBrandByName(c *gin.Context) {
 	name := c.Param("name")
 	var brand models.Brand
-	if err := db.DB.First(&brand, "name = ?", name).Error; err != nil {
+	if err := db.DB.First(&brand, "slug_name = ?", name).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Brand not found"})
 		return
 	}
