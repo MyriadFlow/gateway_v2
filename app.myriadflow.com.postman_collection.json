@@ -61,12 +61,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/:id",
-							"protocol": "http",
+							"raw": "{{base_url}}/users/:id",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "8080",
 							"path": [
 								"users",
 								":id"
@@ -331,7 +329,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Updated Collection\",\n\t\"description\": \"Updated Description\",\n\t\"logo_image\": \"https://example.com/updatedlogo.png\",\n\t\"cover_image\": \"https://example.com/updatedcover.png\",\n\t\"category\": \"Music\",\n\t\"tags\": \"music,audio\",\n\t\"status\": 2,\n\t\"brand_id\": \"updated-uuid\"\n}"
+							"raw": " {\n        \"name\": \"Test Collection\",\n        \"description\": \"A curated Test of awesome items\",\n        \"logo_image\": \"https://Test.com/logo.png\",\n        \"cover_image\": \"https://Test.com/cover.png\",\n        \"category\": {\n            \"Test\": [\n                \"Test\",\n                \"Test & Test\",\n                \"Test goods\"\n            ]\n        },\n        \"tags\": \"Test, Test, Test\",\n        \"status\": 1,\n        \"brand_id\": \"brand123\",\n        \"created_at\": \"2024-06-26T19:29:54.913415Z\",\n        \"updated_at\": \"2024-06-26T19:29:54.913415Z\"\n    }"
 						},
 						"url": {
 							"raw": "http://localhost:8080/collections/:id",
@@ -347,7 +345,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": ""
+									"value": "2875ae1e-fc81-488c-b0f9-682aa1a07452"
 								}
 							]
 						}
@@ -397,9 +395,9 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Test Phygital\",\n\t\"category\": \"Fashion\",\n\t\"description\": \"Phygital Description\",\n\t\"price\": 100,\n\t\"quantity\": 10,\n\t\"royality\": 5,\n\t\"image\": \"https://example.com/image.png\",\n\t\"product_info\": \"Product Info\",\n\t\"color\": \"Red\",\n\t\"size\": \"M\",\n\t\"weight\": 200,\n\t\"material\": \"Cotton\",\n\t\"usage\": \"Wearable\",\n\t\"quality\": \"High\",\n\t\"manufacturer\": \"Manufacturer Name\",\n\t\"origin_country\": \"Country\",\n\t\"metadata_uri\": \"https://example.com/metadata\",\n\t\"deployer_address\": \"0x123456789\",\n\t\"contract_address\": \"0x987654321\",\n\t\"graph_url\": \"https://example.com/graph\",\n\t\"collection_id\": 1\n}"
+							"raw": "{\n    \"name\": \"Sample Product\",\n    \"brand_name\": \"Brand X\",\n    \"category\": {\n        \"key\": \"value\"\n    },\n    \"tags\": {\n        \"key\": \"value\"\n    },\n    \"description\": \"A sample product\",\n    \"price\": 100.0,\n    \"quantity\": 10,\n    \"royality\": 5,\n    \"images\": [\n        {\n            \"url\": \"image1.png\"\n        },\n         {\n            \"url\": \"image1.png\"\n        }\n    ],\n    \"product_info\": \"Product details here\",\n    \"product_url\": \"http://example.com/\",\n    \"color\": \"Red\",\n    \"size_option\": 2,\n    \"size_details\": [\n        {\n            \"size\": \"XS\",\n            \"quantity\": 10,\n            \"additional_details\": \"Limited stock\"\n        },\n        {\n            \"size\": \"S\",\n            \"quantity\": 20,\n            \"additional_details\": \"Good availability\"\n        }\n    ],\n    \"weight\": 1.0,\n    \"material\": \"Steel\",\n    \"usage\": \"General\",\n    \"quality\": \"High\",\n    \"manufacturer\": \"Manufacturer X\",\n    \"origin_country\": \"India\",\n    \"metadata_uri\": \"http://example.com/meta\",\n    \"deployer_address\": \"0xABC\",\n    \"contract_address\": \"0xDEF\",\n    \"graph_url\": \"http://example.com/\",\n    \"elevate_region\": \"Asia\",\n    \"collection_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"chaintype_id\": \"123e4567-e89b-12d3-a456-426614174001\",\n    \"shipping_zones\": [\n        {\n            \"zone_name\": \"US Zone\",\n            \"continents\":[\"Europe\"],\n            \"countries\": [\n                \"US\",\n                \"CA\"\n            ],\n            \"delivery_days_min\": 5,\n            \"delivery_days_max\": 10,\n            \"shipping_price\": 10.0,\n            \"per_order_fee_limit\": true\n        },\n        {\n            \"zone_name\": \"EU Zone\",\n            \"continents\":[\"Africa\",\"Europe\"],\n            \"countries\": [\n                \"UK\",\n                \"DE\"\n            ],\n            \"delivery_days_min\": 7,\n            \"delivery_days_max\": 14,\n            \"shipping_price\": 15.0,\n            \"per_order_fee_limit\": true\n        }\n    ]\n}"
 						},
-						"url": "http://localhost:8080/phygitals"
+						"url": "http://localhost:9090/phygitals"
 					},
 					"response": []
 				},
@@ -409,12 +407,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/phygitals/:id",
+							"raw": "http://localhost:2020/phygitals/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "2020",
 							"path": [
 								"phygitals",
 								":id"
@@ -422,7 +420,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": ""
+									"value": "4e71a633-7a67-4afb-a893-3a973fa798ec"
 								}
 							]
 						}
@@ -430,11 +428,11 @@
 					"response": []
 				},
 				{
-					"name": "Get Phygital Copy",
+					"name": "Get Phygital all",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/phygitals/all"
+						"url": "{{base_url}}/phygitals/all"
 					},
 					"response": []
 				},
@@ -516,9 +514,9 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"image360\": \"https://example.com/360image.png\",\n\t\"video360\": \"https://example.com/360video.mp4\",\n\t\"rewards_metadata_uri\": \"https://example.com/rewardsmetadata\",\n\t\"customizations\": \"Customizations\",\n\t\"free_nft_image\": \"https://example.com/nftimage.png\",\n\t\"gold_reward\": \"Gold Reward\",\n\t\"silver_reward\": \"Silver Reward\",\n\t\"bronze_reward\": \"Bronze Reward\",\n\t\"phygital_id\": \"some-uuid\"\n}"
+							"raw": "{\n    \"image360\": \"example_image_360.jpg\",\n    \"video360\": \"example_video_360.mp4\",\n    \"rewards_metadata_uri\": \"http://example.com/rewards_metadata.json\",\n    \"customizations\": {\n        \"data\": [\"rotate\", \"zoom\"]\n    },\n    \"free_nft_image\": \"free_nft_image.png\",\n    \"gold_reward\": \"gold_reward_item.png\",\n    \"silver_reward\": \"silver_reward_item.png\",\n    \"bronze_reward\": \"bronze_reward_item.png\",\n    \"phygital_id\": \"987e6543-b21c-34d5-c678-526789012345\",\n    \"created_at\": \"2023-06-27T12:00:00Z\",\n    \"updated_at\": \"2024-06-27T12:00:00Z\"\n}\n"
 						},
-						"url": "http://localhost:8080/webxr"
+						"url": "http://localhost:9090/webxr"
 					},
 					"response": []
 				},
@@ -569,7 +567,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"image360\": \"https://example.com/updated360image.png\",\n\t\"video360\": \"https://example.com/updated360video.mp4\",\n\t\"rewards_metadata_uri\": \"https://example.com/updatedrewardsmetadata\",\n\t\"customizations\": \"Updated Customizations\",\n\t\"free_nft_image\": \"https://example.com/updatednftimage.png\",\n\t\"gold_reward\": \"Updated Gold Reward\",\n\t\"silver_reward\": \"Updated Silver Reward\",\n\t\"bronze_reward\": \"Updated Bronze Reward\",\n\t\"phygital_id\": \"updated-uuid\"\n}"
+							"raw": "{\n    \"image360\": \"test.jpg\",\n    \"video360\": \"test.mp4\",\n    \"rewards_metadata_uri\": \"http://test.com/rewards_metadata.json\",\n    \"customizations\": {\n        \"test\": [\n            \"test\",\n            \"test\"\n        ],\n        \"test1\": \"#FFFFFF\"\n    },\n    \"free_nft_image\": \"test.png\",\n    \"gold_reward\": \"test.png\",\n    \"silver_reward\": \"test.png\",\n    \"bronze_reward\": \"test.png\",\n    \"phygital_id\": \"987e6543-b21c-34d5-c678-526789012345\",\n    \"created_at\": \"2023-06-27T12:00:00Z\",\n    \"updated_at\": \"2024-06-27T12:00:00Z\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/webxr/:id",
@@ -585,7 +583,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": ""
+									"value": "ccd65a5a-90fa-431f-82e4-003c60c589bd"
 								}
 							]
 						}
@@ -853,6 +851,33 @@
 								}
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "New Folder",
+			"item": []
+		},
+		{
+			"name": "Fan Token",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nftContractAddress\": \"0xff54f0a4d468cf0ba6e7c84b4663a9386e913231\",\n  \"data\": \"0x0\",\n  \"uri\": \"https://nftstorage.link/ipfs/bafkreiexxih6xmh26mj7qtdauec5nzvkjmzqjbv32govqqrjwxnghmc4va\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9090/create-fantoken"
 					},
 					"response": []
 				}
