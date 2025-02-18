@@ -37,9 +37,9 @@ func GetAgentByID(c *gin.Context) {
 }
 
 func UpdateAgent(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("brand_id")
 	var agent models.Agent
-	if err := db.DB.First(&agent, "id = ?", id).Error; err != nil {
+	if err := db.DB.First(&agent, "agent_category_id = ?", id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Agent not found"})
 		return
 	}
