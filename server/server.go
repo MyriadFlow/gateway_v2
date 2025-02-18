@@ -198,7 +198,7 @@ func Routes(r *gin.Engine) {
 
 	r.POST("/agents", controllers.CreateAgent)
 	r.GET("/agents", controllers.GetAgents)
-	r.GET("/agents/:id", controllers.GetAgentByID)
+	r.GET("/agents/:brand_id", controllers.GetAgentByID)
 	r.PUT("/agents/:id", controllers.UpdateAgent)
 	r.DELETE("/agents/:id", controllers.DeleteAgent)
 
