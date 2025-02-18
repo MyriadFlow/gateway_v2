@@ -37,18 +37,27 @@ func GetAgentByID(c *gin.Context) {
 }
 
 func UpdateAgent(c *gin.Context) {
-	id := c.Param("brand_id")
-	var agent models.Agent
-	if err := db.DB.First(&agent, "agent_category_id = ?", id).Error; err != nil {
+	brandId := c.Param("brand_id")
+	var (
+		agent         models.Agent
+		updateDetails models.Agent
+	)
+	// Fetch the existing agent
+	if err := db.DB.Where("agent_category_id = ?", brandId).First(&agent).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Agent not found"})
 		return
 	}
 
-	if err := c.ShouldBindJSON(&agent); err != nil {
+	if err := c.ShouldBindJSON(&updateDetails); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	db.DB.Save(&agent)
+	// Apply updates safely
+	if err := db.DB.Model(&agent).Updates(updateDetails).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update agent"})
+		return
+	}
+
 	c.JSON(http.StatusOK, agent)
 }
 
