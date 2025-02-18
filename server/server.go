@@ -30,7 +30,7 @@ func Router() {
 	})
 
 	router.GET("/ping_database", func(c *gin.Context) {
-		DB,err := db.Connect()
+		DB, err := db.Connect()
 
 		// Retrieve the underlying SQL database object from GORM
 		sqlDB, err := DB.DB()
@@ -54,7 +54,7 @@ func Router() {
 			"message": "Database connection successful!",
 		})
 	})
-	
+
 	Routes(router)
 	router.Run(":" + os.Getenv("APP_PORT")) // listen and serve on 0.0.0.0:808
 }
@@ -195,5 +195,11 @@ func Routes(r *gin.Engine) {
 	r.GET("/elevate/all/:chaintype_id", controllers.GetAllElevateByChainType)
 	r.PUT("/elevate/:id", controllers.UpdateElevate)
 	r.DELETE("/elevate/:id", controllers.DeleteElevate)
+
+	r.POST("/agents", controllers.CreateAgent)
+	r.GET("/agents", controllers.GetAgents)
+	r.GET("/agents/:id", controllers.GetAgentByID)
+	r.PUT("/agents/:id", controllers.UpdateAgent)
+	r.DELETE("/agents/:id", controllers.DeleteAgent)
 
 }

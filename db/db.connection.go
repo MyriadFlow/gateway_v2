@@ -51,6 +51,7 @@ func Init(DB *gorm.DB) {
 		&models.DelegateMintFanTokenRequest{},
 		&models.Elevate{},
 		&models.Address{},
+		&models.Agent{},
 	)
 
 	if err != nil {
@@ -85,7 +86,6 @@ func InitMigration(db *gorm.DB) error {
 }
 
 func UniqueConstraints(db *gorm.DB) error {
-	uniqueSql := `ALTER TABLE brands ADD CONSTRAINT unique_brand_name UNIQUE (name);
-					ALTER TABLE brands ADD CONSTRAINT unique_slug_name UNIQUE (slug_name);`
+	uniqueSql := `ALTER TABLE brands ADD CONSTRAINT unique_slug_name UNIQUE (slug_name);`
 	return db.Exec(uniqueSql).Error
 }

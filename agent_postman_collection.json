@@ -1,0 +1,118 @@
+{
+    "info": {
+      "_postman_id": "12345678-1234-1234-1234-123456789abc",
+      "name": "Agent API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Create Agent",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"agentId\": \"49e8e21b-b4e5-0754-8bef-6c96b8853e34\",\n    \"agentName\": \"KaiAgents\",\n    \"agentClients\": [],\n    \"agentPort\": 45541,\n    \"agentDomain\": \"KaiAgents.agent.myriadflow.com\",\n    \"agentStatus\": \"active\",\n    \"agentImage\":\"string\",\n    \"agentVoice\":\"string\",\n    \"avatar\":\"string\",\n    \"agentCategoryId\":\"string\",\n    \"categoryType\":\"string\"\n}"
+          },
+          "url": {
+            "raw": "http://localhost:8080/agents",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "8080",
+            "path": [
+              "agents"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Get All Agents",
+        "request": {
+          "method": "GET",
+          "url": {
+            "raw": "http://localhost:8080/agents",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "8080",
+            "path": [
+              "agents"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Get Agent by ID",
+        "request": {
+          "method": "GET",
+          "url": {
+            "raw": "http://localhost:8080/agents/:id",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "8080",
+            "path": [
+              "agents",
+              ":id"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Update Agent",
+        "request": {
+          "method": "PUT",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"agentName\": \"UpdatedAgent\",\n    \"agentClients\": [],\n    \"agentPort\": 45542,\n    \"agentDomain\": \"UpdatedAgent.agent.myriadflow.com\",\n    \"agentStatus\": \"inactive\",\n    \"agentImage\":\"updated_string\",\n    \"agentVoice\":\"updated_string\",\n    \"avatar\":\"updated_string\",\n    \"agentCategoryId\":\"updated_string\",\n    \"categoryType\":\"updated_string\"\n}"
+          },
+          "url": {
+            "raw": "http://localhost:8080/agents/:id",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "8080",
+            "path": [
+              "agents",
+              ":id"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Delete Agent",
+        "request": {
+          "method": "DELETE",
+          "url": {
+            "raw": "http://localhost:8080/agents/:id",
+            "protocol": "http",
+            "host": [
+              "localhost"
+            ],
+            "port": "8080",
+            "path": [
+              "agents",
+              ":id"
+            ]
+          }
+        }
+      }
+    ]
+  }
+  
