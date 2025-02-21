@@ -38,6 +38,8 @@ func GetBrand(c *gin.Context) {
 		return
 	}
 	brand.ContactEmail = ""
+	brand.ContactPhone = ""
+	brand.ShippingAddress = ""
 
 	c.JSON(http.StatusOK, brand)
 }
@@ -52,6 +54,8 @@ func GetBrandsByUserID(c *gin.Context) {
 
 	for i := range brands {
 		brands[i].ContactEmail = ""
+		brands[i].ContactPhone = ""
+		brands[i].ShippingAddress = ""
 	}
 
 	if len(brands) == 0 {
@@ -86,8 +90,8 @@ func GetBrandByName(c *gin.Context) {
 		CoverImage:     brand.CoverImage,
 		Representative: brand.Representative,
 		// ContactEmail:                brand.ContactEmail,
-		ContactPhone:                brand.ContactPhone,
-		ShippingAddress:             brand.ShippingAddress,
+		// ContactPhone:                brand.ContactPhone,
+		// ShippingAddress:             brand.ShippingAddress,
 		Website:                     brand.Website,
 		Twitter:                     brand.Twitter,
 		Instagram:                   brand.Instagram,
@@ -138,8 +142,8 @@ type brandResponse struct {
 	CoverImage     string    `json:"cover_image"`
 	Representative string    `json:"representative"`
 	// ContactEmail                string    `json:"contact_email"`
-	ContactPhone                string    `json:"contact_phone"`
-	ShippingAddress             string    `json:"shipping_address"`
+	// ContactPhone                string    `json:"contact_phone"`
+	// ShippingAddress             string    `json:"shipping_address"`
 	Website                     string    `json:"website"`
 	Twitter                     string    `json:"twitter"`
 	Instagram                   string    `json:"instagram"`
@@ -194,6 +198,8 @@ func GetAllBrands(c *gin.Context) {
 	}
 	for i := range brands {
 		brands[i].ContactEmail = ""
+		brands[i].ContactPhone = ""
+		brands[i].ShippingAddress = ""
 	}
 	c.JSON(http.StatusOK, brands)
 }
@@ -211,6 +217,8 @@ func GetBrandsByManager(c *gin.Context) {
 	}
 	for i := range brands {
 		brands[i].ContactEmail = ""
+		brands[i].ContactPhone = ""
+		brands[i].ShippingAddress = ""
 	}
 	c.JSON(http.StatusOK, brands)
 }
@@ -223,6 +231,8 @@ func GetAllBrandsByRegion(c *gin.Context) {
 	}
 	for i := range brands {
 		brands[i].ContactEmail = ""
+		brands[i].ContactPhone = ""
+		brands[i].ShippingAddress = ""
 	}
 	c.JSON(http.StatusOK, brands)
 }
@@ -255,6 +265,8 @@ func UpdateBrand(c *gin.Context) {
 	}
 
 	brand.ContactEmail = ""
+	brand.ContactPhone = ""
+	brand.ShippingAddress = ""
 
 	c.JSON(http.StatusOK, brand)
 }
