@@ -23,6 +23,8 @@ func CreateProfile(c *gin.Context) {
 		return
 	}
 
+	profile.Email = ""
+
 	c.JSON(http.StatusOK, profile)
 }
 
@@ -35,6 +37,8 @@ func GetProfile(c *gin.Context) {
 		return
 	}
 
+	profile.Email = ""
+
 	c.JSON(http.StatusOK, profile)
 }
 
@@ -44,6 +48,9 @@ func GetAllProfiles(c *gin.Context) {
 	if err := db.DB.Find(&profiles).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
+	}
+	for i := range profiles {
+		profiles[i].Email = ""
 	}
 	c.JSON(http.StatusOK, profiles)
 }
@@ -55,6 +62,9 @@ func GetAllProfilesByChainType(c *gin.Context) {
 	if err := db.DB.Where("chaintype_id = ?", chaintypeId).Find(&profiles).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
+	}
+	for i := range profiles {
+		profiles[i].Email = ""
 	}
 	c.JSON(http.StatusOK, profiles)
 }
@@ -77,6 +87,8 @@ func UpdateProfile(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
+	profile.Email = ""
 
 	c.JSON(http.StatusOK, profile)
 }
@@ -129,6 +141,7 @@ func GetProfileByWalletAddress(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Profile not found"})
 		return
 	}
+	profile.Email = ""
 
 	c.JSON(http.StatusOK, profile)
 }
@@ -140,6 +153,8 @@ func GetProfileByUsername(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Profile not found"})
 		return
 	}
+
+	profile.Email = ""
 
 	c.JSON(http.StatusOK, profile)
 }
