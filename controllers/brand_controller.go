@@ -37,6 +37,7 @@ func GetBrand(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Brand not found"})
 		return
 	}
+	brand.ContactEmail = ""
 
 	c.JSON(http.StatusOK, brand)
 }
@@ -47,6 +48,10 @@ func GetBrandsByUserID(c *gin.Context) {
 	if err := db.DB.Where("user_id = ?", userID).Find(&brands).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
+	}
+
+	for i := range brands {
+		brands[i].ContactEmail = ""
 	}
 
 	if len(brands) == 0 {
@@ -70,17 +75,17 @@ func GetBrandByName(c *gin.Context) {
 		return
 	}
 	response := brandResponse{
-		ID:                          brand.ID,
-		Name:                        brand.Name,
-		SlugName:                    brand.SlugName,
-		AgentId:                     brand.AgentId,
-		AvatarId:                    brand.AvatarId,
-		Slogan:                      brand.Slogan,
-		Description:                 brand.Description,
-		LogoImage:                   brand.LogoImage,
-		CoverImage:                  brand.CoverImage,
-		Representative:              brand.Representative,
-		ContactEmail:                brand.ContactEmail,
+		ID:             brand.ID,
+		Name:           brand.Name,
+		SlugName:       brand.SlugName,
+		AgentId:        brand.AgentId,
+		AvatarId:       brand.AvatarId,
+		Slogan:         brand.Slogan,
+		Description:    brand.Description,
+		LogoImage:      brand.LogoImage,
+		CoverImage:     brand.CoverImage,
+		Representative: brand.Representative,
+		// ContactEmail:                brand.ContactEmail,
 		ContactPhone:                brand.ContactPhone,
 		ShippingAddress:             brand.ShippingAddress,
 		Website:                     brand.Website,
@@ -122,17 +127,17 @@ func GetBrandByName(c *gin.Context) {
 }
 
 type brandResponse struct {
-	ID                          uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
-	Name                        string    `json:"name"`
-	SlugName                    string    `gorm:"unique" json:"slug_name"`
-	AgentId                     string    `json:"agent_id"`
-	AvatarId                    string    `json:"avatar_id"`
-	Slogan                      string    `json:"slogan"`
-	Description                 string    `json:"description"`
-	LogoImage                   string    `json:"logo_image"`
-	CoverImage                  string    `json:"cover_image"`
-	Representative              string    `json:"representative"`
-	ContactEmail                string    `json:"contact_email"`
+	ID             uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
+	Name           string    `json:"name"`
+	SlugName       string    `gorm:"unique" json:"slug_name"`
+	AgentId        string    `json:"agent_id"`
+	AvatarId       string    `json:"avatar_id"`
+	Slogan         string    `json:"slogan"`
+	Description    string    `json:"description"`
+	LogoImage      string    `json:"logo_image"`
+	CoverImage     string    `json:"cover_image"`
+	Representative string    `json:"representative"`
+	// ContactEmail                string    `json:"contact_email"`
 	ContactPhone                string    `json:"contact_phone"`
 	ShippingAddress             string    `json:"shipping_address"`
 	Website                     string    `json:"website"`
@@ -187,6 +192,9 @@ func GetAllBrands(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+	for i := range brands {
+		brands[i].ContactEmail = ""
+	}
 	c.JSON(http.StatusOK, brands)
 }
 
@@ -201,6 +209,9 @@ func GetBrandsByManager(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "No brands found for the specified manager_id"})
 		return
 	}
+	for i := range brands {
+		brands[i].ContactEmail = ""
+	}
 	c.JSON(http.StatusOK, brands)
 }
 
@@ -209,6 +220,9 @@ func GetAllBrandsByRegion(c *gin.Context) {
 	if err := db.DB.Where("elevate_region = ?", "Africa").Find(&brands).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
+	}
+	for i := range brands {
+		brands[i].ContactEmail = ""
 	}
 	c.JSON(http.StatusOK, brands)
 }
@@ -239,6 +253,8 @@ func UpdateBrand(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
+	brand.ContactEmail = ""
 
 	c.JSON(http.StatusOK, brand)
 }
