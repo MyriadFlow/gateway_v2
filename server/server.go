@@ -31,6 +31,12 @@ func Router() {
 
 	router.GET("/ping_database", func(c *gin.Context) {
 		DB, err := db.Connect()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Failed to connect to database: " + err.Error(),
+			})
+			return
+		}
 
 		// Retrieve the underlying SQL database object from GORM
 		sqlDB, err := DB.DB()
@@ -95,7 +101,7 @@ func Routes(r *gin.Engine) {
 	r.GET("/phygitals/:id", phygital_controllers.GetPhygital)
 	r.GET("/phygitals/deployer_address/:deployer_address", phygital_controllers.GetPhygitalByWalletAddress)
 	r.GET("/phygitals/all/:chaintype_id", phygital_controllers.GetAllPhygitalByChainType)
-	r.GET("/phygitals/all", phygital_controllers.GetAllPhygital)
+	// r.GET("/phygitals/all", phygital_controllers.GetAllPhygital)
 	r.PUT("/phygitals/:id", phygital_controllers.UpdatePhygital)
 	r.DELETE("/phygitals/:id", phygital_controllers.DeletePhygital)
 	r.GET("/phygitals/region", phygital_controllers.GetAllPhygitalByRegion)
@@ -202,4 +208,9 @@ func Routes(r *gin.Engine) {
 	r.PUT("/agents/:brand_id", controllers.UpdateAgent)
 	r.DELETE("/agents/:id", controllers.DeleteAgent)
 
+	RoutesV2(r)
+
+}
+func RoutesV2(r *gin.Engine) {
+	r.GET("v2/phygitals/all", phygital_controllers.GetAllPhygital)
 }

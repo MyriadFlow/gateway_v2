@@ -11,28 +11,33 @@ import (
 
 var DB *gorm.DB
 
-func Init(DB *gorm.DB) {
-	db, err := DB.DB()
+func Init() {
+	db, err := Connect()
 	if err != nil {
 		log.Println(err)
 		log.Fatal(err)
 	}
-	db.SetMaxIdleConns(50)
-	db.SetMaxOpenConns(200)
+	sqlDB, err := db.DB()
+	if err != nil {
+		log.Println(err)
+		log.Fatal(err)
+	}
+	sqlDB.SetMaxIdleConns(50)
+	sqlDB.SetMaxOpenConns(200)
 
-	err = db.Ping()
+	err = sqlDB.Ping()
 	if err != nil {
 		log.Println(err)
 		log.Fatal(err)
 	}
 	log.Println("Successfully connected to the database!")
 
-	err = InitMigration(DB)
+	err = InitMigration(db)
 	if err != nil {
 		log.Println(err)
 	}
 
-	err = DB.AutoMigrate(
+	err = db.AutoMigrate(
 		&models.User{},
 		&models.Brand{},
 		&models.Collection{},
@@ -58,7 +63,7 @@ func Init(DB *gorm.DB) {
 		log.Fatalf("failed to migrate database: %v", err)
 	} else {
 		log.Println("Database migrated successfully")
-		if err := UniqueConstraints(DB); err != nil {
+		if err := UniqueConstraints(db); err != nil {
 			log.Printf("failed to create unique constraints: %v", err)
 		} else {
 			log.Println("Unique constraints created successfully")

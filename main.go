@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"app.myriadflow.com/db"
@@ -12,12 +13,10 @@ func init() {
 	if len(os.Getenv("HOST")) == 0 {
 		godotenv.Load()
 	}
-	dbS, err := db.Connect()
-	if err != nil {
-		panic(err)
-
+	if _, err := db.Connect(); err != nil {
+		log.Fatalln(err)
 	}
-	db.Init(dbS)
+	db.Init()
 }
 
 func main() {
