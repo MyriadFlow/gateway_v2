@@ -212,5 +212,5 @@ func Routes(r *gin.Engine) {
 
 }
 func RoutesV2(r *gin.Engine) {
-	r.GET("v2/phygitals/all", phygital_controllers.GetAllPhygital)
+	r.GET("v2/all/phygitals", phygital_controllers.GetAllPhygital)
 }
