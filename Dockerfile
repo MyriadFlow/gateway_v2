@@ -2,7 +2,7 @@ FROM golang:alpine as builder
 WORKDIR /app
 COPY go.mod .
 COPY go.sum .
-RUN apk add --no-cache build-base openssl
+RUN apk add --no-cache build-base openssl-dev
 RUN go mod download
 COPY . .
 RUN apk add --no-cache git && go build -o myriadflow_gateway . && apk del git
