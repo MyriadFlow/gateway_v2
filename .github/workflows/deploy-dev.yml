@@ -37,8 +37,8 @@ jobs:
       with:         
         host: ${{ secrets.PROD_REMOTE_SERVER_ADDRESS }}
         username: ${{ secrets.PROD_SERVER_USERNAME }}
-        key:  ${{ secrets.PROD_REMOTE_SERVER_KEY }}
-        port: ${{ secrets.PROD_SSH_PORT }} 
+        key:  ${{ secrets.DEV_REMOTE_SERVER_KEY }}
+        port: ${{ secrets.DEV_SSH_PORT }} 
         script: |
           pwd
           cd app.gateway
