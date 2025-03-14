@@ -10,4 +10,5 @@ FROM alpine
 WORKDIR /app
 RUN apk add --no-cache openssl
 COPY --from=builder /app/myriadflow_gateway .
+EXPOSE 9090
 CMD [ "./myriadflow_gateway" ]
