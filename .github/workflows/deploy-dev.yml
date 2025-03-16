@@ -49,6 +49,6 @@ jobs:
           sudo docker pull ghcr.io/myriadflow/gateway_v2:main
           echo "Loading environment variables from secrets..."
           echo "${{ secrets.PROD_ENV_FILE }}" > .env
-          sudo docker run --name="myriadflow_gateway" --env-file=.env -p 9090:9090 -d ghcr.io/myriadflow/gateway_v2:main
+          sudo docker run --name="myriadflow_gateway" --env-file=.env -p 9090:8080 -d ghcr.io/myriadflow/gateway_v2:main
           rm -rf .env
 
