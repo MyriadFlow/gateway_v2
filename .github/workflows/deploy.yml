@@ -70,4 +70,3 @@ jobs:
           echo "${{ secrets.DEV_ENV_FILE }}" > .env
           sudo docker run --name="myriadflow_gateway_dev" --env-file=.env -p 9091:8080 --network=myriadflow_network -d ghcr.io/myriadflow/gateway_v2:dev
           rm -rf .env
-
