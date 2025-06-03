@@ -44,7 +44,7 @@ jobs:
         port: ${{ secrets.PROD_SSH_PORT }} 
         script: |
           pwd
-          # cd app.gateway
+          cd myriadflow_gateway
           sudo docker stop myriadflow_gateway && sudo docker rm myriadflow_gateway && sudo docker rmi ghcr.io/myriadflow/gateway_v2:main
           echo ${{ secrets.GHCR_TOKEN }} | sudo docker login ghcr.io -u secrets.GHCR_USERNAME --password-stdin
           sudo docker pull ghcr.io/myriadflow/gateway_v2:main
