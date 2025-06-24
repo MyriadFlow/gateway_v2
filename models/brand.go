@@ -10,7 +10,7 @@ import (
 type Brand struct {
 	ID                          uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id"`
 	Name                        string    `json:"name"`
-	SlugName                    string    `gorm:"unique" json:"slug_name"`
+	SlugName                    string    `gorm:"uniqueIndex" json:"slug_name"`
 	AgentId                     string    `json:"agent_id"`
 	AvatarId                    string    `json:"avatar_id"`
 	Slogan                      string    `json:"slogan"`
