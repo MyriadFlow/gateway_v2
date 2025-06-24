@@ -51,7 +51,7 @@ jobs:
           echo "Loading environment variables from secrets..."
           echo "${{ secrets.PROD_ENV_FILE }}" > .env
           sudo docker run --name="myriadflow_gateway" --env-file=.env -p 9090:8080 --network=myriadflow_network -d ghcr.io/myriadflow/gateway_v2:main
-          # rm -rf .env
+          rm -rf .env
     
     - name: Deploy on Development server 
       if: github.ref == 'refs/heads/dev' 
